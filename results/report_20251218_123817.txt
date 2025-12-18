@@ -1,0 +1,135 @@
+================================================================================
+CODE SMELLS ANALYSIS REPORT
+================================================================================
+
+Date/Time: 2025-12-18 12:39:56
+Models analyzed: 3
+Files analyzed: 5
+
+--------------------------------------------------------------------------------
+STATISTICS PER MODEL
+--------------------------------------------------------------------------------
+
+Model: Qwen/Qwen2.5-7B-Instruct
+   Files: 5
+   Total smells: 13
+   Average per file: 2.60
+
+   Distribution by type:
+      - Primitive Obsession: 5
+      - Long Method: 3
+      - Lazy Class: 3
+      - Long Parameter List: 1
+      - Data Clumps: 1
+
+   Distribution by severity:
+      - High: 4
+      - Medium: 7
+      - Low: 2
+
+Model: google/gemma-2-2b-it:nebius
+   Files: 5
+   Total smells: 16
+   Average per file: 3.20
+
+   Distribution by type:
+      - Long Method: 8
+      - Inappropriate Intimacy: 5
+      - Data Clumps: 2
+      - Long Parameter List: 1
+
+   Distribution by severity:
+      - Medium: 14
+      - High: 2
+
+Model: openai/gpt-oss-120b:groq
+   Files: 5
+   Total smells: 22
+   Average per file: 4.40
+
+   Distribution by type:
+      - Long Parameter List: 5
+      - Primitive Obsession: 5
+      - Data Clumps: 5
+      - Speculative Generality: 2
+      - Data Class: 2
+      - Long Method: 1
+      - Lazy Class: 1
+      - Comment: 1
+
+   Distribution by severity:
+      - Medium: 8
+      - Low: 14
+
+--------------------------------------------------------------------------------
+STATISTICS PER RELEASE
+--------------------------------------------------------------------------------
+
+Release: 1.0.2
+   Files analyzed: 2
+   Total smells: 22
+   Average per file: 11.00
+
+   Distribution by type:
+      - Long Method: 5
+      - Primitive Obsession: 4
+      - Long Parameter List: 3
+      - Data Clumps: 3
+      - Lazy Class: 2
+      - Inappropriate Intimacy: 2
+      - Speculative Generality: 2
+      - Data Class: 1
+
+Release: 2.0.0
+   Files analyzed: 2
+   Total smells: 20
+   Average per file: 10.00
+
+   Distribution by type:
+      - Long Method: 4
+      - Primitive Obsession: 4
+      - Data Clumps: 4
+      - Long Parameter List: 3
+      - Inappropriate Intimacy: 2
+      - Lazy Class: 1
+      - Data Class: 1
+      - Comment: 1
+
+Release: 3.0.0
+   Files analyzed: 1
+   Total smells: 9
+   Average per file: 9.00
+
+   Distribution by type:
+      - Long Method: 3
+      - Primitive Obsession: 2
+      - Lazy Class: 1
+      - Inappropriate Intimacy: 1
+      - Long Parameter List: 1
+      - Data Clumps: 1
+
+--------------------------------------------------------------------------------
+CONSENSUS CODE SMELLS (detected by multiple models)
+--------------------------------------------------------------------------------
+
+Type: Long Method
+   File: 2.0.0\evals\api.py
+   Location: {'function': 'record_and_check_match', 'class': 'None'}
+   Detected by 3 models: Qwen/Qwen2.5-7B-Instruct, google/gemma-2-2b-it:nebius, google/gemma-2-2b-it:nebius
+
+Type: Long Method
+   File: 1.0.2\evals\api.py
+   Location: {'function': 'record_and_check_match', 'class': 'None'}
+   Detected by 3 models: Qwen/Qwen2.5-7B-Instruct, google/gemma-2-2b-it:nebius, google/gemma-2-2b-it:nebius
+
+Type: Long Method
+   File: 3.0.0\evals\api.py
+   Location: {'function': 'record_and_check_match', 'class': 'None'}
+   Detected by 3 models: Qwen/Qwen2.5-7B-Instruct, google/gemma-2-2b-it:nebius, google/gemma-2-2b-it:nebius
+
+Type: Primitive Obsession
+   File: 2.0.0\evals\base.py
+   Location: {'function': None, 'class': 'BaseEvalSpec'}
+   Detected by 2 models: Qwen/Qwen2.5-7B-Instruct, openai/gpt-oss-120b:groq
+
+================================================================================

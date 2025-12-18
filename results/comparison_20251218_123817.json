@@ -1,0 +1,165 @@
+{
+  "models_compared": [
+    "Qwen/Qwen2.5-7B-Instruct",
+    "google/gemma-2-2b-it:nebius",
+    "openai/gpt-oss-120b:groq"
+  ],
+  "total_files_analyzed": 5,
+  "model_statistics": {
+    "Qwen/Qwen2.5-7B-Instruct": {
+      "files_analyzed": 5,
+      "total_smells_found": 13,
+      "avg_smells_per_file": 2.6,
+      "smell_types_distribution": {
+        "Long Method": 3,
+        "Primitive Obsession": 5,
+        "Lazy Class": 3,
+        "Long Parameter List": 1,
+        "Data Clumps": 1
+      },
+      "severity_distribution": {
+        "High": 4,
+        "Medium": 7,
+        "Low": 2
+      }
+    },
+    "google/gemma-2-2b-it:nebius": {
+      "files_analyzed": 5,
+      "total_smells_found": 16,
+      "avg_smells_per_file": 3.2,
+      "smell_types_distribution": {
+        "Long Method": 8,
+        "Inappropriate Intimacy": 5,
+        "Data Clumps": 2,
+        "Long Parameter List": 1
+      },
+      "severity_distribution": {
+        "Medium": 14,
+        "High": 2
+      }
+    },
+    "openai/gpt-oss-120b:groq": {
+      "files_analyzed": 5,
+      "total_smells_found": 22,
+      "avg_smells_per_file": 4.4,
+      "smell_types_distribution": {
+        "Long Method": 1,
+        "Long Parameter List": 5,
+        "Primitive Obsession": 5,
+        "Data Clumps": 5,
+        "Speculative Generality": 2,
+        "Data Class": 2,
+        "Lazy Class": 1,
+        "Comment": 1
+      },
+      "severity_distribution": {
+        "Medium": 8,
+        "Low": 14
+      }
+    }
+  },
+  "consensus_smells": [
+    {
+      "file": "2.0.0\\evals\\api.py",
+      "smell_type": "Long Method",
+      "location": {
+        "function": "record_and_check_match",
+        "class": "None"
+      },
+      "detected_by": [
+        "Qwen/Qwen2.5-7B-Instruct",
+        "google/gemma-2-2b-it:nebius",
+        "google/gemma-2-2b-it:nebius"
+      ],
+      "agreement_count": 3
+    },
+    {
+      "file": "1.0.2\\evals\\api.py",
+      "smell_type": "Long Method",
+      "location": {
+        "function": "record_and_check_match",
+        "class": "None"
+      },
+      "detected_by": [
+        "Qwen/Qwen2.5-7B-Instruct",
+        "google/gemma-2-2b-it:nebius",
+        "google/gemma-2-2b-it:nebius"
+      ],
+      "agreement_count": 3
+    },
+    {
+      "file": "3.0.0\\evals\\api.py",
+      "smell_type": "Long Method",
+      "location": {
+        "function": "record_and_check_match",
+        "class": "None"
+      },
+      "detected_by": [
+        "Qwen/Qwen2.5-7B-Instruct",
+        "google/gemma-2-2b-it:nebius",
+        "google/gemma-2-2b-it:nebius"
+      ],
+      "agreement_count": 3
+    },
+    {
+      "file": "2.0.0\\evals\\base.py",
+      "smell_type": "Primitive Obsession",
+      "location": {
+        "function": null,
+        "class": "BaseEvalSpec"
+      },
+      "detected_by": [
+        "Qwen/Qwen2.5-7B-Instruct",
+        "openai/gpt-oss-120b:groq"
+      ],
+      "agreement_count": 2
+    }
+  ],
+  "unique_smells": {},
+  "agreement_matrix": {},
+  "release_statistics": {
+    "1.0.2": {
+      "files_analyzed": 2,
+      "total_smells_found": 22,
+      "avg_smells_per_file": 11.0,
+      "smell_types_distribution": {
+        "Long Method": 5,
+        "Primitive Obsession": 4,
+        "Lazy Class": 2,
+        "Inappropriate Intimacy": 2,
+        "Long Parameter List": 3,
+        "Data Clumps": 3,
+        "Speculative Generality": 2,
+        "Data Class": 1
+      }
+    },
+    "2.0.0": {
+      "files_analyzed": 2,
+      "total_smells_found": 20,
+      "avg_smells_per_file": 10.0,
+      "smell_types_distribution": {
+        "Long Method": 4,
+        "Primitive Obsession": 4,
+        "Inappropriate Intimacy": 2,
+        "Long Parameter List": 3,
+        "Data Clumps": 4,
+        "Lazy Class": 1,
+        "Data Class": 1,
+        "Comment": 1
+      }
+    },
+    "3.0.0": {
+      "files_analyzed": 1,
+      "total_smells_found": 9,
+      "avg_smells_per_file": 9.0,
+      "smell_types_distribution": {
+        "Long Method": 3,
+        "Primitive Obsession": 2,
+        "Lazy Class": 1,
+        "Inappropriate Intimacy": 1,
+        "Long Parameter List": 1,
+        "Data Clumps": 1
+      }
+    }
+  }
+}

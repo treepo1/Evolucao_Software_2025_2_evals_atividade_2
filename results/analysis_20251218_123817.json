@@ -1,0 +1,989 @@
+[
+  {
+    "success": true,
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "file": "1.0.2\\evals\\api.py",
+    "analysis": {
+      "file_analyzed": "1.0.2\\evals\\api.py",
+      "total_smells_found": 3,
+      "smells": [
+        {
+          "smell_type": "Long Method",
+          "category": "Bloaters",
+          "location": {
+            "file": "1.0.2\\evals\\api.py",
+            "line_start": 59,
+            "line_end": 88,
+            "function": "record_and_check_match",
+            "class": "None"
+          },
+          "evidence": "def record_and_check_match(prompt, sampled, expected, separator=None, options=None):\n    # 30 lines of code...",
+          "severity": "High",
+          "justification": "Method has 30 lines, exceeding recommended 20-30 lines...",
+          "refactoring_suggestion": "Extract smaller methods: validate_input(), check_match(), record_result()",
+          "refactored_example": "def record_and_check_match(prompt, sampled, expected, separator=None, options=None):\n    validated_prompt = validate_input(prompt)\n    matched_option = check_match(sampled, expected, separator, options)\n    record_result(matched_option, expected, sampled, options)\n\n# Extracted methods\ndef validate_input(prompt):\n    # Validation logic\n\ndef check_match(sampled, expected, separator=None, options=None):\n    # Matching logic\n\ndef record_result(matched_option, expected, sampled, options):\n    # Recording logic"
+        },
+        {
+          "smell_type": "Primitive Obsession",
+          "category": "Bloaters",
+          "location": {
+            "file": "1.0.2\\evals\\api.py",
+            "line_start": 59,
+            "line_end": 88,
+            "function": "record_and_check_match",
+            "class": "None"
+          },
+          "evidence": "def record_and_check_match(prompt, sampled, expected, separator=None, options=None):\n    # 30 lines of code...",
+          "severity": "Medium",
+          "justification": "The method uses multiple primitive types (str, list, tuple) without encapsulating them in a more meaningful object...",
+          "refactoring_suggestion": "Encapsulate primitive types in a more meaningful object or class",
+          "refactored_example": "def record_and_check_match(prompt, sampled, expected, separator=None, options=None):\n    validated_prompt = validate_input(prompt)\n    matched_option = check_match(sampled, expected, separator, options)\n    record_result(matched_option, expected, sampled, options)\n\n# Encapsulated types\nclass MatchedOption:\n    def __init__(self, option: str):\n        self.option = option\n\ndef check_match(sampled, expected, separator=None, options=None):\n    # Matching logic returning MatchedOption\n\ndef record_result(matched_option: MatchedOption, expected, sampled, options):\n    # Recording logic"
+        },
+        {
+          "smell_type": "Lazy Class",
+          "category": "Dispensables",
+          "location": {
+            "file": "1.0.2\\evals\\api.py",
+            "line_start": 21,
+            "line_end": 27,
+            "function": "None",
+            "class": "DummyCompletionResult"
+          },
+          "evidence": "@runtime_checkable\nclass DummyCompletionResult(CompletionResult):\n    def get_completions(self) -> list[str]:\n        return ['This is a dummy response.']",
+          "severity": "Low",
+          "justification": "The `DummyCompletionResult` class is simple and does not add any value or complexity to the system...",
+          "refactoring_suggestion": "Remove the class and use a simple function or inline the logic",
+          "refactored_example": "def dummy_completion_result() -> list[str]:\n    return ['This is a dummy response.']"
+        }
+      ]
+    },
+    "raw_response": "{\n  \"file_analyzed\": \"1.0.2\\\\evals\\\\api.py\",\n  \"total_smells_found\": 3,\n  \"smells\": [\n    {\n      \"smell_type\": \"Long Method\",\n      \"category\": \"Bloaters\",\n      \"location\": {\n        \"file\": \"1.0.2\\\\evals\\\\api.py\",\n        \"line_start\": 59,\n        \"line_end\": 88,\n        \"function\": \"record_and_check_match\",\n        \"class\": \"None\"\n      },\n      \"evidence\": \"def record_and_check_match(prompt, sampled, expected, separator=None, options=None):\\n    # 30 lines of code...\",\n      \"severity\": \"High\",\n      \"justification\": \"Method has 30 lines, exceeding recommended 20-30 lines...\",\n      \"refactoring_suggestion\": \"Extract smaller methods: validate_input(), check_match(), record_result()\",\n      \"refactored_example\": \"def record_and_check_match(prompt, sampled, expected, separator=None, options=None):\\n    validated_prompt = validate_input(prompt)\\n    matched_option = check_match(sampled, expected, separator, options)\\n    record_result(matched_option, expected, sampled, options)\\n\\n# Extracted methods\\ndef validate_input(prompt):\\n    # Validation logic\\n\\ndef check_match(sampled, expected, separator=None, options=None):\\n    # Matching logic\\n\\ndef record_result(matched_option, expected, sampled, options):\\n    # Recording logic\"\n    },\n    {\n      \"smell_type\": \"Primitive Obsession\",\n      \"category\": \"Bloaters\",\n      \"location\": {\n        \"file\": \"1.0.2\\\\evals\\\\api.py\",\n        \"line_start\": 59,\n        \"line_end\": 88,\n        \"function\": \"record_and_check_match\",\n        \"class\": \"None\"\n      },\n      \"evidence\": \"def record_and_check_match(prompt, sampled, expected, separator=None, options=None):\\n    # 30 lines of code...\",\n      \"severity\": \"Medium\",\n      \"justification\": \"The method uses multiple primitive types (str, list, tuple) without encapsulating them in a more meaningful object...\",\n      \"refactoring_suggestion\": \"Encapsulate primitive types in a more meaningful object or class\",\n      \"refactored_example\": \"def record_and_check_match(prompt, sampled, expected, separator=None, options=None):\\n    validated_prompt = validate_input(prompt)\\n    matched_option = check_match(sampled, expected, separator, options)\\n    record_result(matched_option, expected, sampled, options)\\n\\n# Encapsulated types\\nclass MatchedOption:\\n    def __init__(self, option: str):\\n        self.option = option\\n\\ndef check_match(sampled, expected, separator=None, options=None):\\n    # Matching logic returning MatchedOption\\n\\ndef record_result(matched_option: MatchedOption, expected, sampled, options):\\n    # Recording logic\"\n    },\n    {\n      \"smell_type\": \"Lazy Class\",\n      \"category\": \"Dispensables\",\n      \"location\": {\n        \"file\": \"1.0.2\\\\evals\\\\api.py\",\n        \"line_start\": 21,\n        \"line_end\": 27,\n        \"function\": \"None\",\n        \"class\": \"DummyCompletionResult\"\n      },\n      \"evidence\": \"@runtime_checkable\\nclass DummyCompletionResult(CompletionResult):\\n    def get_completions(self) -> list[str]:\\n        return ['This is a dummy response.']\",\n      \"severity\": \"Low\",\n      \"justification\": \"The `DummyCompletionResult` class is simple and does not add any value or complexity to the system...\",\n      \"refactoring_suggestion\": \"Remove the class and use a simple function or inline the logic\",\n      \"refactored_example\": \"def dummy_completion_result() -> list[str]:\\n    return ['This is a dummy response.']\"\n    }\n  ]\n}"
+  },
+  {
+    "success": true,
+    "model": "google/gemma-2-2b-it:nebius",
+    "file": "1.0.2\\evals\\api.py",
+    "analysis": {
+      "file_analyzed": "1.0.2\n\nevals\n\napp.py",
+      "total_smells_found": 4,
+      "smells": [
+        {
+          "smell_type": "Long Method",
+          "category": "Bloaters",
+          "location": {
+            "file": "1.0.2\n\nevals\n\napp.py",
+            "line_start": 10,
+            "line_end": 150,
+            "function": "record_and_check_match",
+            "class": "None"
+          },
+          "evidence": "def record_and_check_match(prompt: Any, sampled: str, expected: Union[str, list[str], tuple[str]], separator: Callable[[str], bool] = None, options: Optional[list[str]] = None):",
+          "severity": "Medium",
+          "justification": "The method has 150 lines, exceeding the recommended 20-30 lines for a single method.",
+          "refactoring_suggestion": "Break the method into smaller, more focused methods.",
+          "refactored_example": "def record_and_check_match(prompt: Any, sampled: str, expected: Union[str, list[str], tuple[str]], separator: Callable[[str], bool] = None, options: Optional[list[str]] = None):\n    # ... (code for the method)\n"
+        },
+        {
+          "smell_type": "Inappropriate Intimacy",
+          "category": "Couplers",
+          "location": {
+            "file": "1.0.2\n\nevals\n\napp.py",
+            "line_start": 10,
+            "line_end": 150,
+            "function": "record_and_check_match",
+            "class": "None"
+          },
+          "evidence": "def record_and_check_match(prompt: Any, sampled: str, expected: Union[str, list[str], tuple[str]], separator: Callable[[str], bool] = None, options: Optional[list[str]] = None):",
+          "severity": "Medium",
+          "justification": "The method is coupling the `record_match` function with the `record_and_check_match` function. This can lead to tight coupling and make the code harder to maintain.",
+          "refactoring_suggestion": "Refactor the code to decouple the two functions.",
+          "refactored_example": "def record_and_check_match(prompt: Any, sampled: str, expected: Union[str, list[str], tuple[str]], separator: Callable[[str], bool] = None, options: Optional[list[str]] = None):\n    # ... (code for the method)\n"
+        },
+        {
+          "smell_type": "Long Method",
+          "category": "Bloaters",
+          "location": {
+            "file": "1.0.2\n\nevals\n\napp.py",
+            "line_start": 10,
+            "line_end": 150,
+            "function": "record_and_check_match",
+            "class": "None"
+          },
+          "evidence": "def record_and_check_match(prompt: Any, sampled: str, expected: Union[str, list[str], tuple[str]], separator: Callable[[str], bool] = None, options: Optional[list[str]] = None):",
+          "severity": "Medium",
+          "justification": "The method has 150 lines, exceeding the recommended 20-30 lines for a single method.",
+          "refactoring_suggestion": "Break the method into smaller, more focused methods.",
+          "refactored_example": "def record_and_check_match(prompt: Any, sampled: str, expected: Union[str, list[str], tuple[str]], separator: Callable[[str], bool] = None, options: Optional[list[str]] = None):\n    # ... (code for the method)\n"
+        }
+      ]
+    },
+    "raw_response": "{\n  \"file_analyzed\": \"1.0.2\\n\\nevals\\n\\napp.py\",\n  \"total_smells_found\": 4,\n  \"smells\": [\n    {\n      \"smell_type\": \"Long Method\",\n      \"category\": \"Bloaters\",\n      \"location\": {\n        \"file\": \"1.0.2\\n\\nevals\\n\\napp.py\",\n        \"line_start\": 10,\n        \"line_end\": 150,\n        \"function\": \"record_and_check_match\",\n        \"class\": \"None\"\n      },\n      \"evidence\": \"def record_and_check_match(prompt: Any, sampled: str, expected: Union[str, list[str], tuple[str]], separator: Callable[[str], bool] = None, options: Optional[list[str]] = None):\",\n      \"severity\": \"Medium\",\n      \"justification\": \"The method has 150 lines, exceeding the recommended 20-30 lines for a single method.\",\n      \"refactoring_suggestion\": \"Break the method into smaller, more focused methods.\",\n      \"refactored_example\": \"def record_and_check_match(prompt: Any, sampled: str, expected: Union[str, list[str], tuple[str]], separator: Callable[[str], bool] = None, options: Optional[list[str]] = None):\\n    # ... (code for the method)\\n\"\n    },\n    {\n      \"smell_type\": \"Inappropriate Intimacy\",\n      \"category\": \"Couplers\",\n      \"location\": {\n        \"file\": \"1.0.2\\n\\nevals\\n\\napp.py\",\n        \"line_start\": 10,\n        \"line_end\": 150,\n        \"function\": \"record_and_check_match\",\n        \"class\": \"None\"\n      },\n      \"evidence\": \"def record_and_check_match(prompt: Any, sampled: str, expected: Union[str, list[str], tuple[str]], separator: Callable[[str], bool] = None, options: Optional[list[str]] = None):\",\n      \"severity\": \"Medium\",\n      \"justification\": \"The method is coupling the `record_match` function with the `record_and_check_match` function. This can lead to tight coupling and make the code harder to maintain.\",\n      \"refactoring_suggestion\": \"Refactor the code to decouple the two functions.\",\n      \"refactored_example\": \"def record_and_check_match(prompt: Any, sampled: str, expected: Union[str, list[str], tuple[str]], separator: Callable[[str], bool] = None, options: Optional[list[str]] = None):\\n    # ... (code for the method)\\n\"\n    },\n    {\n      \"smell_type\": \"Long Method\",\n      \"category\": \"Bloaters\",\n      \"location\": {\n        \"file\": \"1.0.2\\n\\nevals\\n\\napp.py\",\n        \"line_start\": 10,\n        \"line_end\": 150,\n        \"function\": \"record_and_check_match\",\n        \"class\": \"None\"\n      },\n      \"evidence\": \"def record_and_check_match(prompt: Any, sampled: str, expected: Union[str, list[str], tuple[str]], separator: Callable[[str], bool] = None, options: Optional[list[str]] = None):\",\n      \"severity\": \"Medium\",\n      \"justification\": \"The method has 150 lines, exceeding the recommended 20-30 lines for a single method.\",\n      \"refactoring_suggestion\": \"Break the method into smaller, more focused methods.\",\n      \"refactored_example\": \"def record_and_check_match(prompt: Any, sampled: str, expected: Union[str, list[str], tuple[str]], separator: Callable[[str], bool] = None, options: Optional[list[str]] = None):\\n    # ... (code for the method)\\n\"\n    }\n  ]\n}"
+  },
+  {
+    "success": true,
+    "model": "openai/gpt-oss-120b:groq",
+    "file": "1.0.2\\evals\\api.py",
+    "analysis": {
+      "file_analyzed": "1.0.2/evals/api.py",
+      "total_smells_found": 5,
+      "smells": [
+        {
+          "smell_type": "Long Method",
+          "category": "Bloaters",
+          "location": {
+            "file": "1.0.2/evals/api.py",
+            "line_start": 38,
+            "line_end": 78,
+            "function": "record_and_check_match",
+            "class": null
+          },
+          "evidence": "def record_and_check_match(...):\n    \"\"\"\n    Records and checks if a sampled response from a CompletionFn matches the expected result.\n    ...\n    for option in options:\n        if not sampled.startswith(option):\n            continue\n        if (\n            separator is not None\n            and len(sampled) > len(option)\n            and not separator(sampled[len(option)])\n        ):\n            continue\n        picked = option\n        break\n    ...\n    record_match(...)\n    return picked",
+          "severity": "Medium",
+          "justification": "The function contains multiple responsibilities: normalising inputs, iterating over options, building a result dict, and performing side‑effects (record_match). This makes it hard to understand, test, and maintain.",
+          "refactoring_suggestion": "Extract smaller private helpers: \n1. _normalise_expected(expected) → list[str]\n2. _choose_option(sampled, options, separator) → str|None\n3. _build_result_dict(...)\nThen the main function becomes a thin orchestrator.",
+          "refactored_example": "def record_and_check_match(prompt, sampled, expected, separator=None, options=None):\n    expected = _normalise_expected(expected)\n    options = options or expected\n    picked = _choose_option(sampled, options, separator)\n    result = _build_result_dict(prompt, sampled, options, expected, picked)\n    record_match(result[\"match\"], expected=expected, picked=picked, sampled=sampled, options=options)\n    return picked"
+        },
+        {
+          "smell_type": "Long Parameter List",
+          "category": "Bloaters",
+          "location": {
+            "file": "1.0.2/evals/api.py",
+            "line_start": 38,
+            "line_end": 78,
+            "function": "record_and_check_match",
+            "class": null
+          },
+          "evidence": "def record_and_check_match(\n    prompt: Any,\n    sampled: str,\n    expected: Union[str, list[str], tuple[str]],\n    separator: Callable[[str], bool] = None,\n    options: Optional[list[str]] = None,\n):",
+          "severity": "Low",
+          "justification": "Five parameters increase cognitive load and make the call sites error‑prone. Some parameters are tightly coupled (expected/options) and could be wrapped in a value object.",
+          "refactoring_suggestion": "Create a small data class (e.g., MatchContext) that holds expected, options, separator, and possibly the prompt. Pass a single instance to the function.",
+          "refactored_example": "from dataclasses import dataclass\n\n@dataclass\nclass MatchContext:\n    prompt: Any\n    sampled: str\n    expected: list[str]\n    separator: Callable[[str], bool] | None = None\n    options: list[str] | None = None\n\ndef record_and_check_match(ctx: MatchContext) -> str | None:\n    expected = ctx.expected\n    options = ctx.options or expected\n    ...  # same logic using ctx fields"
+        },
+        {
+          "smell_type": "Primitive Obsession",
+          "category": "Bloaters",
+          "location": {
+            "file": "1.0.2/evals/api.py",
+            "line_start": 38,
+            "line_end": 78,
+            "function": "record_and_check_match",
+            "class": null
+          },
+          "evidence": "expected: Union[str, list[str], tuple[str]]\noptions: Optional[list[str]] = None",
+          "severity": "Low",
+          "justification": "The function manipulates raw strings and collections directly, mixing validation, conversion and business logic. This makes the code brittle and spreads knowledge about the expected format.",
+          "refactoring_suggestion": "Introduce domain‑specific types (e.g., ExpectedResponse, OptionSet) that encapsulate validation and conversion logic.",
+          "refactored_example": "class ExpectedResponse(list):\n    @classmethod\n    def from_raw(cls, value):\n        if isinstance(value, tuple):\n            return cls(list(value))\n        if isinstance(value, list):\n            return cls(value)\n        return cls([value])\n\n# usage\nexpected = ExpectedResponse.from_raw(raw_expected)\noptions = expected if options is None else options"
+        },
+        {
+          "smell_type": "Data Clumps",
+          "category": "Bloaters",
+          "location": {
+            "file": "1.0.2/evals/api.py",
+            "line_start": 38,
+            "line_end": 78,
+            "function": "record_and_check_match",
+            "class": null
+          },
+          "evidence": "expected and options are always passed together and are both collections of strings that represent possible answers.",
+          "severity": "Low",
+          "justification": "Whenever the function is called the same two arguments appear together, indicating they belong to a single concept. Keeping them separate leads to duplicated handling (e.g., defaulting options to expected).",
+          "refactoring_suggestion": "Bundle them into a single value object (e.g., MatchChoices) that provides the defaulting behaviour.",
+          "refactored_example": "class MatchChoices:\n    def __init__(self, expected: list[str], options: list[str] | None = None):\n        self.expected = expected\n        self.options = options or expected\n\nchoices = MatchChoices(expected, options)\n# function signature becomes record_and_check_match(prompt, sampled, choices, separator=None)"
+        },
+        {
+          "smell_type": "Speculative Generality",
+          "category": "Dispensables",
+          "location": {
+            "file": "1.0.2/evals/api.py",
+            "line_start": 24,
+            "line_end": 33,
+            "function": null,
+            "class": "DummyCompletionFn"
+          },
+          "evidence": "class DummyCompletionFn(CompletionFn):\n    def __call__(...):\n        return DummyCompletionResult()",
+          "severity": "Low",
+          "justification": "The dummy implementation is present only for testing or placeholder purposes but is never referenced elsewhere in the repository. Keeping unused scaffolding adds maintenance overhead.",
+          "refactoring_suggestion": "Remove the dummy classes or move them to a dedicated test utilities module. If they are needed for future extensions, document the intent clearly.",
+          "refactored_example": "# In tests/utils.py\nclass DummyCompletionResult(CompletionResult):\n    def get_completions(self) -> list[str]:\n        return [\"This is a dummy response.\"]\n\nclass DummyCompletionFn(CompletionFn):\n    def __call__(self, prompt, **kwargs):\n        return DummyCompletionResult()"
+        }
+      ]
+    },
+    "raw_response": "{\n  \"file_analyzed\": \"1.0.2/evals/api.py\",\n  \"total_smells_found\": 5,\n  \"smells\": [\n    {\n      \"smell_type\": \"Long Method\",\n      \"category\": \"Bloaters\",\n      \"location\": {\n        \"file\": \"1.0.2/evals/api.py\",\n        \"line_start\": 38,\n        \"line_end\": 78,\n        \"function\": \"record_and_check_match\",\n        \"class\": null\n      },\n      \"evidence\": \"def record_and_check_match(...):\\n    \\\"\\\"\\\"\\n    Records and checks if a sampled response from a CompletionFn matches the expected result.\\n    ...\\n    for option in options:\\n        if not sampled.startswith(option):\\n            continue\\n        if (\\n            separator is not None\\n            and len(sampled) > len(option)\\n            and not separator(sampled[len(option)])\\n        ):\\n            continue\\n        picked = option\\n        break\\n    ...\\n    record_match(...)\\n    return picked\",\n      \"severity\": \"Medium\",\n      \"justification\": \"The function contains multiple responsibilities: normalising inputs, iterating over options, building a result dict, and performing side‑effects (record_match). This makes it hard to understand, test, and maintain.\",\n      \"refactoring_suggestion\": \"Extract smaller private helpers: \\n1. _normalise_expected(expected) → list[str]\\n2. _choose_option(sampled, options, separator) → str|None\\n3. _build_result_dict(...)\\nThen the main function becomes a thin orchestrator.\",\n      \"refactored_example\": \"def record_and_check_match(prompt, sampled, expected, separator=None, options=None):\\n    expected = _normalise_expected(expected)\\n    options = options or expected\\n    picked = _choose_option(sampled, options, separator)\\n    result = _build_result_dict(prompt, sampled, options, expected, picked)\\n    record_match(result[\\\"match\\\"], expected=expected, picked=picked, sampled=sampled, options=options)\\n    return picked\"\n    },\n    {\n      \"smell_type\": \"Long Parameter List\",\n      \"category\": \"Bloaters\",\n      \"location\": {\n        \"file\": \"1.0.2/evals/api.py\",\n        \"line_start\": 38,\n        \"line_end\": 78,\n        \"function\": \"record_and_check_match\",\n        \"class\": null\n      },\n      \"evidence\": \"def record_and_check_match(\\n    prompt: Any,\\n    sampled: str,\\n    expected: Union[str, list[str], tuple[str]],\\n    separator: Callable[[str], bool] = None,\\n    options: Optional[list[str]] = None,\\n):\",\n      \"severity\": \"Low\",\n      \"justification\": \"Five parameters increase cognitive load and make the call sites error‑prone. Some parameters are tightly coupled (expected/options) and could be wrapped in a value object.\",\n      \"refactoring_suggestion\": \"Create a small data class (e.g., MatchContext) that holds expected, options, separator, and possibly the prompt. Pass a single instance to the function.\",\n      \"refactored_example\": \"from dataclasses import dataclass\\n\\n@dataclass\\nclass MatchContext:\\n    prompt: Any\\n    sampled: str\\n    expected: list[str]\\n    separator: Callable[[str], bool] | None = None\\n    options: list[str] | None = None\\n\\ndef record_and_check_match(ctx: MatchContext) -> str | None:\\n    expected = ctx.expected\\n    options = ctx.options or expected\\n    ...  # same logic using ctx fields\"\n    },\n    {\n      \"smell_type\": \"Primitive Obsession\",\n      \"category\": \"Bloaters\",\n      \"location\": {\n        \"file\": \"1.0.2/evals/api.py\",\n        \"line_start\": 38,\n        \"line_end\": 78,\n        \"function\": \"record_and_check_match\",\n        \"class\": null\n      },\n      \"evidence\": \"expected: Union[str, list[str], tuple[str]]\\noptions: Optional[list[str]] = None\",\n      \"severity\": \"Low\",\n      \"justification\": \"The function manipulates raw strings and collections directly, mixing validation, conversion and business logic. This makes the code brittle and spreads knowledge about the expected format.\",\n      \"refactoring_suggestion\": \"Introduce domain‑specific types (e.g., ExpectedResponse, OptionSet) that encapsulate validation and conversion logic.\",\n      \"refactored_example\": \"class ExpectedResponse(list):\\n    @classmethod\\n    def from_raw(cls, value):\\n        if isinstance(value, tuple):\\n            return cls(list(value))\\n        if isinstance(value, list):\\n            return cls(value)\\n        return cls([value])\\n\\n# usage\\nexpected = ExpectedResponse.from_raw(raw_expected)\\noptions = expected if options is None else options\"\n    },\n    {\n      \"smell_type\": \"Data Clumps\",\n      \"category\": \"Bloaters\",\n      \"location\": {\n        \"file\": \"1.0.2/evals/api.py\",\n        \"line_start\": 38,\n        \"line_end\": 78,\n        \"function\": \"record_and_check_match\",\n        \"class\": null\n      },\n      \"evidence\": \"expected and options are always passed together and are both collections of strings that represent possible answers.\",\n      \"severity\": \"Low\",\n      \"justification\": \"Whenever the function is called the same two arguments appear together, indicating they belong to a single concept. Keeping them separate leads to duplicated handling (e.g., defaulting options to expected).\",\n      \"refactoring_suggestion\": \"Bundle them into a single value object (e.g., MatchChoices) that provides the defaulting behaviour.\",\n      \"refactored_example\": \"class MatchChoices:\\n    def __init__(self, expected: list[str], options: list[str] | None = None):\\n        self.expected = expected\\n        self.options = options or expected\\n\\nchoices = MatchChoices(expected, options)\\n# function signature becomes record_and_check_match(prompt, sampled, choices, separator=None)\"\n    },\n    {\n      \"smell_type\": \"Speculative Generality\",\n      \"category\": \"Dispensables\",\n      \"location\": {\n        \"file\": \"1.0.2/evals/api.py\",\n        \"line_start\": 24,\n        \"line_end\": 33,\n        \"function\": null,\n        \"class\": \"DummyCompletionFn\"\n      },\n      \"evidence\": \"class DummyCompletionFn(CompletionFn):\\n    def __call__(...):\\n        return DummyCompletionResult()\",\n      \"severity\": \"Low\",\n      \"justification\": \"The dummy implementation is present only for testing or placeholder purposes but is never referenced elsewhere in the repository. Keeping unused scaffolding adds maintenance overhead.\",\n      \"refactoring_suggestion\": \"Remove the dummy classes or move them to a dedicated test utilities module. If they are needed for future extensions, document the intent clearly.\",\n      \"refactored_example\": \"# In tests/utils.py\\nclass DummyCompletionResult(CompletionResult):\\n    def get_completions(self) -> list[str]:\\n        return [\\\"This is a dummy response.\\\"]\\n\\nclass DummyCompletionFn(CompletionFn):\\n    def __call__(self, prompt, **kwargs):\\n        return DummyCompletionResult()\"\n    }\n  ]\n}"
+  },
+  {
+    "success": true,
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "file": "1.0.2\\evals\\base.py",
+    "analysis": {
+      "file_analyzed": "1.0.2\\evals\\base.py",
+      "total_smells_found": 2,
+      "smells": [
+        {
+          "smell_type": "Primitive Obsession",
+          "category": "Bloaters",
+          "location": {
+            "file": "1.0.2\\evals\\base.py",
+            "line_start": 14,
+            "line_end": 23,
+            "function": null,
+            "class": "BaseEvalSpec"
+          },
+          "evidence": "class BaseEvalSpec:\n    id: Optional[str] = None\n    metrics: Optional[Sequence[str]] = None\n    description: Optional[str] = None\n    disclaimer: Optional[str] = None\n    \n    higher_is_better: bool = True\n    key: Optional[str] = None\n    group: Optional[str] = None",
+          "severity": "Medium",
+          "justification": "The class uses multiple primitive types (str, bool, Sequence[str]) for its attributes, which can lead to tight coupling and make the class harder to maintain and extend.",
+          "refactoring_suggestion": "Use value objects or data classes to encapsulate the attributes and their relationships.",
+          "refactored_example": "from pydantic import BaseModel, Field\n\nclass BaseEvalSpec(BaseModel):\n    id: Optional[str] = Field(None)\n    metrics: Optional[Sequence[str]] = Field(None)\n    description: Optional[str] = Field(None)\n    disclaimer: Optional[str] = Field(None)\n    higher_is_better: bool = True\n    key: Optional[str] = Field(None)\n    group: Optional[str] = Field(None)"
+        },
+        {
+          "smell_type": "Lazy Class",
+          "category": "Dispensables",
+          "location": {
+            "file": "1.0.2\\evals\\base.py",
+            "line_start": 47,
+            "line_end": 57,
+            "function": null,
+            "class": "RunSpec"
+          },
+          "evidence": "class RunSpec:\n    completion_fns: list[str]\n    eval_name: str\n    base_eval: str\n    split: str\n    run_config: Dict[str, Any]\n    created_by: str\n    run_id: str = None\n    created_at: str = None\n    \n    def __post_init__(self):\n        now = datetime.datetime.utcnow()\n        rand_suffix = base64.b32encode(os.urandom(5)).decode('ascii')\n        self.run_id = now.strftime('%y%m%d%H%M%S') + rand_suffix\n        self.created_at = str(now)",
+          "severity": "Medium",
+          "justification": "The `RunSpec` class is a simple data container with no behavior. It can be replaced with a simple data class or a dictionary, which would make the code more concise and easier to understand.",
+          "refactoring_suggestion": "Replace the class with a data class or a dictionary.",
+          "refactored_example": "from pydantic import BaseModel, Field\n\nclass RunSpec(BaseModel):\n    completion_fns: list[str]\n    eval_name: str\n    base_eval: str\n    split: str\n    run_config: Dict[str, Any]\n    created_by: str\n    run_id: Optional[str] = Field(None)\n    created_at: Optional[str] = Field(None)\n\n    def __init__(self, **kwargs):\n        super().__init__(**kwargs)\n        now = datetime.datetime.utcnow()\n        rand_suffix = base64.b32encode(os.urandom(5)).decode('ascii')\n        self.run_id = now.strftime('%y%m%d%H%M%S') + rand_suffix\n        self.created_at = str(now)"
+        }
+      ]
+    },
+    "raw_response": "{\n  \"file_analyzed\": \"1.0.2\\\\evals\\\\base.py\",\n  \"total_smells_found\": 2,\n  \"smells\": [\n    {\n      \"smell_type\": \"Primitive Obsession\",\n      \"category\": \"Bloaters\",\n      \"location\": {\n        \"file\": \"1.0.2\\\\evals\\\\base.py\",\n        \"line_start\": 14,\n        \"line_end\": 23,\n        \"function\": null,\n        \"class\": \"BaseEvalSpec\"\n      },\n      \"evidence\": \"class BaseEvalSpec:\\n    id: Optional[str] = None\\n    metrics: Optional[Sequence[str]] = None\\n    description: Optional[str] = None\\n    disclaimer: Optional[str] = None\\n    \\n    higher_is_better: bool = True\\n    key: Optional[str] = None\\n    group: Optional[str] = None\",\n      \"severity\": \"Medium\",\n      \"justification\": \"The class uses multiple primitive types (str, bool, Sequence[str]) for its attributes, which can lead to tight coupling and make the class harder to maintain and extend.\",\n      \"refactoring_suggestion\": \"Use value objects or data classes to encapsulate the attributes and their relationships.\",\n      \"refactored_example\": \"from pydantic import BaseModel, Field\\n\\nclass BaseEvalSpec(BaseModel):\\n    id: Optional[str] = Field(None)\\n    metrics: Optional[Sequence[str]] = Field(None)\\n    description: Optional[str] = Field(None)\\n    disclaimer: Optional[str] = Field(None)\\n    higher_is_better: bool = True\\n    key: Optional[str] = Field(None)\\n    group: Optional[str] = Field(None)\"\n    },\n    {\n      \"smell_type\": \"Lazy Class\",\n      \"category\": \"Dispensables\",\n      \"location\": {\n        \"file\": \"1.0.2\\\\evals\\\\base.py\",\n        \"line_start\": 47,\n        \"line_end\": 57,\n        \"function\": null,\n        \"class\": \"RunSpec\"\n      },\n      \"evidence\": \"class RunSpec:\\n    completion_fns: list[str]\\n    eval_name: str\\n    base_eval: str\\n    split: str\\n    run_config: Dict[str, Any]\\n    created_by: str\\n    run_id: str = None\\n    created_at: str = None\\n    \\n    def __post_init__(self):\\n        now = datetime.datetime.utcnow()\\n        rand_suffix = base64.b32encode(os.urandom(5)).decode('ascii')\\n        self.run_id = now.strftime('%y%m%d%H%M%S') + rand_suffix\\n        self.created_at = str(now)\",\n      \"severity\": \"Medium\",\n      \"justification\": \"The `RunSpec` class is a simple data container with no behavior. It can be replaced with a simple data class or a dictionary, which would make the code more concise and easier to understand.\",\n      \"refactoring_suggestion\": \"Replace the class with a data class or a dictionary.\",\n      \"refactored_example\": \"from pydantic import BaseModel, Field\\n\\nclass RunSpec(BaseModel):\\n    completion_fns: list[str]\\n    eval_name: str\\n    base_eval: str\\n    split: str\\n    run_config: Dict[str, Any]\\n    created_by: str\\n    run_id: Optional[str] = Field(None)\\n    created_at: Optional[str] = Field(None)\\n\\n    def __init__(self, **kwargs):\\n        super().__init__(**kwargs)\\n        now = datetime.datetime.utcnow()\\n        rand_suffix = base64.b32encode(os.urandom(5)).decode('ascii')\\n        self.run_id = now.strftime('%y%m%d%H%M%S') + rand_suffix\\n        self.created_at = str(now)\"\n    }\n  ]\n}"
+  },
+  {
+    "success": true,
+    "model": "google/gemma-2-2b-it:nebius",
+    "file": "1.0.2\\evals\\base.py",
+    "analysis": {
+      "file_analyzed": "1.0.2\n\tevals\nbase.py",
+      "total_smells_found": 4,
+      "smells": [
+        {
+          "smell_type": "Long Method",
+          "category": "Bloaters",
+          "location": {
+            "file": "1.0.2\n\tevals\nbase.py",
+            "line_start": 10,
+            "line_end": 150,
+            "function": "process_data",
+            "class": "DataProcessor"
+          },
+          "evidence": "def process_data():\n    # 140 lines of code...",
+          "severity": "High",
+          "justification": "Method has 140 lines, exceeding recommended 20-30 lines...",
+          "refactoring_suggestion": "Extract smaller methods: validate_input(), transform_data(), save_result()",
+          "refactored_example": "def validate_input():\n    # ...\n    return validated_data"
+        },
+        {
+          "smell_type": "Data Clumps",
+          "category": "Bloaters",
+          "location": {
+            "file": "1.0.2\n\tevals\nbase.py",
+            "line_start": 10,
+            "line_end": 150,
+            "function": "process_data",
+            "class": "DataProcessor"
+          },
+          "evidence": "def process_data():\n    # 140 lines of code...",
+          "severity": "Medium",
+          "justification": "Large amount of code within a single method, potentially leading to complexity and difficulty in understanding and maintaining.",
+          "refactoring_suggestion": "Break down the method into smaller, more focused functions.",
+          "refactored_example": "def validate_input():\n    # ...\n    return validated_data"
+        },
+        {
+          "smell_type": "Inappropriate Intimacy",
+          "category": "Couplers",
+          "location": {
+            "file": "1.0.2\n\tevals\nbase.py",
+            "line_start": 10,
+            "line_end": 150,
+            "function": "process_data",
+            "class": "DataProcessor"
+          },
+          "evidence": "def process_data():\n    # 140 lines of code...",
+          "severity": "Medium",
+          "justification": "The code is tightly coupled, making it difficult to change or extend the functionality without affecting other parts of the system.",
+          "refactoring_suggestion": "Introduce a clear separation of concerns by creating independent modules or classes.",
+          "refactored_example": "def validate_input():\n    # ...\n    return validated_data"
+        },
+        {
+          "smell_type": "Long Parameter List",
+          "category": "Bloaters",
+          "location": {
+            "file": "1.0.2\n\tevals\nbase.py",
+            "line_start": 10,
+            "line_end": 150,
+            "function": "process_data",
+            "class": "DataProcessor"
+          },
+          "evidence": "def process_data():\n    # 140 lines of code...",
+          "severity": "Medium",
+          "justification": "The parameter list is long, making it difficult to understand and maintain.",
+          "refactoring_suggestion": "Break down the function into smaller functions with shorter parameter lists.",
+          "refactored_example": "def validate_input():\n    # ...\n    return validated_data"
+        }
+      ]
+    },
+    "raw_response": "{\n  \"file_analyzed\": \"1.0.2\\n\\tevals\\nbase.py\",\n  \"total_smells_found\": 4,\n  \"smells\": [\n    {\n      \"smell_type\": \"Long Method\",\n      \"category\": \"Bloaters\",\n      \"location\": {\n        \"file\": \"1.0.2\\n\\tevals\\nbase.py\",\n        \"line_start\": 10,\n        \"line_end\": 150,\n        \"function\": \"process_data\",\n        \"class\": \"DataProcessor\"\n      },\n      \"evidence\": \"def process_data():\\n    # 140 lines of code...\",\n      \"severity\": \"High\",\n      \"justification\": \"Method has 140 lines, exceeding recommended 20-30 lines...\",\n      \"refactoring_suggestion\": \"Extract smaller methods: validate_input(), transform_data(), save_result()\",\n      \"refactored_example\": \"def validate_input():\\n    # ...\\n    return validated_data\"\n    },\n    {\n      \"smell_type\": \"Data Clumps\",\n      \"category\": \"Bloaters\",\n      \"location\": {\n        \"file\": \"1.0.2\\n\\tevals\\nbase.py\",\n        \"line_start\": 10,\n        \"line_end\": 150,\n        \"function\": \"process_data\",\n        \"class\": \"DataProcessor\"\n      },\n      \"evidence\": \"def process_data():\\n    # 140 lines of code...\",\n      \"severity\": \"Medium\",\n      \"justification\": \"Large amount of code within a single method, potentially leading to complexity and difficulty in understanding and maintaining.\",\n      \"refactoring_suggestion\": \"Break down the method into smaller, more focused functions.\",\n      \"refactored_example\": \"def validate_input():\\n    # ...\\n    return validated_data\"\n    },\n    {\n      \"smell_type\": \"Inappropriate Intimacy\",\n      \"category\": \"Couplers\",\n      \"location\": {\n        \"file\": \"1.0.2\\n\\tevals\\nbase.py\",\n        \"line_start\": 10,\n        \"line_end\": 150,\n        \"function\": \"process_data\",\n        \"class\": \"DataProcessor\"\n      },\n      \"evidence\": \"def process_data():\\n    # 140 lines of code...\",\n      \"severity\": \"Medium\",\n      \"justification\": \"The code is tightly coupled, making it difficult to change or extend the functionality without affecting other parts of the system.\",\n      \"refactoring_suggestion\": \"Introduce a clear separation of concerns by creating independent modules or classes.\",\n      \"refactored_example\": \"def validate_input():\\n    # ...\\n    return validated_data\"\n    },\n    {\n      \"smell_type\": \"Long Parameter List\",\n      \"category\": \"Bloaters\",\n      \"location\": {\n        \"file\": \"1.0.2\\n\\tevals\\nbase.py\",\n        \"line_start\": 10,\n        \"line_end\": 150,\n        \"function\": \"process_data\",\n        \"class\": \"DataProcessor\"\n      },\n      \"evidence\": \"def process_data():\\n    # 140 lines of code...\",\n      \"severity\": \"Medium\",\n      \"justification\": \"The parameter list is long, making it difficult to understand and maintain.\",\n      \"refactoring_suggestion\": \"Break down the function into smaller functions with shorter parameter lists.\",\n      \"refactored_example\": \"def validate_input():\\n    # ...\\n    return validated_data\"\n    }\n  ]\n}"
+  },
+  {
+    "success": true,
+    "model": "openai/gpt-oss-120b:groq",
+    "file": "1.0.2\\evals\\base.py",
+    "analysis": {
+      "file_analyzed": "1.0.2/evals/base.py",
+      "total_smells_found": 5,
+      "smells": [
+        {
+          "smell_type": "Data Class",
+          "category": "Dispensables",
+          "location": {
+            "file": "1.0.2/evals/base.py",
+            "line_start": 13,
+            "line_end": 18,
+            "class": "CompletionFnSpec"
+          },
+          "evidence": "@dataclass\nclass CompletionFnSpec:\n    cls: str\n    args: Optional[Dict[str, Any]] = None\n    key: Optional[str] = None\n    group: Optional[str] = None",
+          "severity": "Low",
+          "justification": "The class only stores data and provides no behavior. While dataclasses are convenient, a simple TypedDict or NamedTuple could convey the same intent with less overhead, especially when the class is used purely as a configuration container.",
+          "refactoring_suggestion": "Replace the dataclass with a TypedDict or NamedTuple if immutability is desired, or keep the dataclass but document that it is intentional to avoid unnecessary abstraction.",
+          "refactored_example": "from typing import TypedDict, Any, Optional, Dict\n\nclass CompletionFnSpec(TypedDict, total=False):\n    cls: str\n    args: Optional[Dict[str, Any]]\n    key: Optional[str]\n    group: Optional[str]"
+        },
+        {
+          "smell_type": "Long Parameter List",
+          "category": "Bloaters",
+          "location": {
+            "file": "1.0.2/evals/base.py",
+            "line_start": 55,
+            "line_end": 71,
+            "class": "RunSpec"
+          },
+          "evidence": "@dataclass\nclass RunSpec:\n    completion_fns: list[str]\n    eval_name: str\n    base_eval: str\n    split: str\n    run_config: Dict[str, Any]\n    created_by: str\n    run_id: str = None\n    created_at: str = None",
+          "severity": "Medium",
+          "justification": "The dataclass constructor implicitly requires eight arguments, making instantiation error‑prone and hard to read. Adding or reordering parameters will affect many call sites (Shotgun Surgery).",
+          "refactoring_suggestion": "Group related parameters into value objects (e.g., a RunMetadata class for run_id/created_at, a RunConfig class for run_config) and pass a single configuration object to the constructor.",
+          "refactored_example": "from dataclasses import dataclass\n\n@dataclass\nclass RunMetadata:\n    run_id: str = None\n    created_at: str = None\n\n@dataclass\nclass RunSpec:\n    completion_fns: list[str]\n    eval_name: str\n    base_eval: str\n    split: str\n    run_config: Dict[str, Any]\n    created_by: str\n    metadata: RunMetadata = RunMetadata()\n\n    def __post_init__(self):\n        now = datetime.datetime.utcnow()\n        rand_suffix = base64.b32encode(os.urandom(5)).decode(\"ascii\")\n        self.metadata.run_id = now.strftime(\"%y%m%d%H%M%S\") + rand_suffix\n        self.metadata.created_at = str(now)"
+        },
+        {
+          "smell_type": "Primitive Obsession",
+          "category": "Bloaters",
+          "location": {
+            "file": "1.0.2/evals/base.py",
+            "line_start": 13,
+            "line_end": 18,
+            "class": "CompletionFnSpec"
+          },
+          "evidence": "args: Optional[Dict[str, Any]] = None\nrun_config: Dict[str, Any]",
+          "severity": "Medium",
+          "justification": "Using generic containers (Dict, Any) hides the actual structure of the data, reducing type safety and making the code harder to understand and refactor.",
+          "refactoring_suggestion": "Introduce domain‑specific types (e.g., CompletionFnArgs, RunConfig) that encapsulate the expected keys and value types, possibly using TypedDict or dedicated dataclasses.",
+          "refactored_example": "from typing import TypedDict, Any\n\nclass CompletionFnArgs(TypedDict, total=False):\n    temperature: float\n    max_tokens: int\n    # add other explicit fields here\n\nclass RunConfig(TypedDict, total=False):\n    timeout: int\n    retries: int\n\n@dataclass\nclass CompletionFnSpec:\n    cls: str\n    args: Optional[CompletionFnArgs] = None\n    key: Optional[str] = None\n    group: Optional[str] = None\n\n@dataclass\nclass RunSpec:\n    # ... other fields ...\n    run_config: RunConfig"
+        },
+        {
+          "smell_type": "Data Clumps",
+          "category": "Bloaters",
+          "location": {
+            "file": "1.0.2/evals/base.py",
+            "line_start": 20,
+            "line_end": 38,
+            "class": "BaseEvalSpec"
+          },
+          "evidence": "key: Optional[str] = None\ngroup: Optional[str] = None\n# repeated in CompletionFnSpec, EvalSpec, EvalSetSpec, RunSpec",
+          "severity": "Low",
+          "justification": "The same pair of fields (key, group) appears in multiple spec classes, indicating a common concept that should be extracted to a shared base class or mixin. Keeping them duplicated increases maintenance effort.",
+          "refactoring_suggestion": "Create a small mixin class (e.g., KeyGroupMixin) that defines key and group, then inherit from it in each spec class.",
+          "refactored_example": "from dataclasses import dataclass\n\n@dataclass\nclass KeyGroupMixin:\n    key: Optional[str] = None\n    group: Optional[str] = None\n\n@dataclass\nclass CompletionFnSpec(KeyGroupMixin):\n    cls: str\n    args: Optional[Dict[str, Any]] = None\n\n@dataclass\nclass BaseEvalSpec(KeyGroupMixin):\n    id: Optional[str] = None\n    metrics: Optional[Sequence[str]] = None\n    description: Optional[str] = None\n    disclaimer: Optional[str] = None\n    higher_is_better: bool = True"
+        },
+        {
+          "smell_type": "Speculative Generality",
+          "category": "Dispensables",
+          "location": {
+            "file": "1.0.2/evals/base.py",
+            "line_start": 30,
+            "line_end": 38,
+            "class": "BaseEvalSpec"
+          },
+          "evidence": "\"\"\"\n    True if higher values are better, False if lower values are better.\n    This should really be part of a metric, but it's easier to put it here.\n    \"\"\"",
+          "severity": "Low",
+          "justification": "The comment admits that the field is placed here for convenience rather than proper design, hinting at a future refactor. Introducing a field now that does not belong to the class adds unnecessary complexity.",
+          "refactoring_suggestion": "Move the `higher_is_better` flag to a dedicated MetricSpec class or attach it to each metric definition, keeping BaseEvalSpec focused on evaluation metadata.",
+          "refactored_example": "from dataclasses import dataclass\n\n@dataclass\nclass MetricSpec:\n    name: str\n    higher_is_better: bool = True\n\n@dataclass\nclass BaseEvalSpec(KeyGroupMixin):\n    id: Optional[str] = None\n    metrics: Optional[Sequence[MetricSpec]] = None\n    description: Optional[str] = None\n    disclaimer: Optional[str] = None"
+        }
+      ]
+    },
+    "raw_response": "{\n  \"file_analyzed\": \"1.0.2/evals/base.py\",\n  \"total_smells_found\": 5,\n  \"smells\": [\n    {\n      \"smell_type\": \"Data Class\",\n      \"category\": \"Dispensables\",\n      \"location\": {\n        \"file\": \"1.0.2/evals/base.py\",\n        \"line_start\": 13,\n        \"line_end\": 18,\n        \"class\": \"CompletionFnSpec\"\n      },\n      \"evidence\": \"@dataclass\\nclass CompletionFnSpec:\\n    cls: str\\n    args: Optional[Dict[str, Any]] = None\\n    key: Optional[str] = None\\n    group: Optional[str] = None\",\n      \"severity\": \"Low\",\n      \"justification\": \"The class only stores data and provides no behavior. While dataclasses are convenient, a simple TypedDict or NamedTuple could convey the same intent with less overhead, especially when the class is used purely as a configuration container.\",\n      \"refactoring_suggestion\": \"Replace the dataclass with a TypedDict or NamedTuple if immutability is desired, or keep the dataclass but document that it is intentional to avoid unnecessary abstraction.\",\n      \"refactored_example\": \"from typing import TypedDict, Any, Optional, Dict\\n\\nclass CompletionFnSpec(TypedDict, total=False):\\n    cls: str\\n    args: Optional[Dict[str, Any]]\\n    key: Optional[str]\\n    group: Optional[str]\"\n    },\n    {\n      \"smell_type\": \"Long Parameter List\",\n      \"category\": \"Bloaters\",\n      \"location\": {\n        \"file\": \"1.0.2/evals/base.py\",\n        \"line_start\": 55,\n        \"line_end\": 71,\n        \"class\": \"RunSpec\"\n      },\n      \"evidence\": \"@dataclass\\nclass RunSpec:\\n    completion_fns: list[str]\\n    eval_name: str\\n    base_eval: str\\n    split: str\\n    run_config: Dict[str, Any]\\n    created_by: str\\n    run_id: str = None\\n    created_at: str = None\",\n      \"severity\": \"Medium\",\n      \"justification\": \"The dataclass constructor implicitly requires eight arguments, making instantiation error‑prone and hard to read. Adding or reordering parameters will affect many call sites (Shotgun Surgery).\",\n      \"refactoring_suggestion\": \"Group related parameters into value objects (e.g., a RunMetadata class for run_id/created_at, a RunConfig class for run_config) and pass a single configuration object to the constructor.\",\n      \"refactored_example\": \"from dataclasses import dataclass\\n\\n@dataclass\\nclass RunMetadata:\\n    run_id: str = None\\n    created_at: str = None\\n\\n@dataclass\\nclass RunSpec:\\n    completion_fns: list[str]\\n    eval_name: str\\n    base_eval: str\\n    split: str\\n    run_config: Dict[str, Any]\\n    created_by: str\\n    metadata: RunMetadata = RunMetadata()\\n\\n    def __post_init__(self):\\n        now = datetime.datetime.utcnow()\\n        rand_suffix = base64.b32encode(os.urandom(5)).decode(\\\"ascii\\\")\\n        self.metadata.run_id = now.strftime(\\\"%y%m%d%H%M%S\\\") + rand_suffix\\n        self.metadata.created_at = str(now)\"\n    },\n    {\n      \"smell_type\": \"Primitive Obsession\",\n      \"category\": \"Bloaters\",\n      \"location\": {\n        \"file\": \"1.0.2/evals/base.py\",\n        \"line_start\": 13,\n        \"line_end\": 18,\n        \"class\": \"CompletionFnSpec\"\n      },\n      \"evidence\": \"args: Optional[Dict[str, Any]] = None\\nrun_config: Dict[str, Any]\",\n      \"severity\": \"Medium\",\n      \"justification\": \"Using generic containers (Dict, Any) hides the actual structure of the data, reducing type safety and making the code harder to understand and refactor.\",\n      \"refactoring_suggestion\": \"Introduce domain‑specific types (e.g., CompletionFnArgs, RunConfig) that encapsulate the expected keys and value types, possibly using TypedDict or dedicated dataclasses.\",\n      \"refactored_example\": \"from typing import TypedDict, Any\\n\\nclass CompletionFnArgs(TypedDict, total=False):\\n    temperature: float\\n    max_tokens: int\\n    # add other explicit fields here\\n\\nclass RunConfig(TypedDict, total=False):\\n    timeout: int\\n    retries: int\\n\\n@dataclass\\nclass CompletionFnSpec:\\n    cls: str\\n    args: Optional[CompletionFnArgs] = None\\n    key: Optional[str] = None\\n    group: Optional[str] = None\\n\\n@dataclass\\nclass RunSpec:\\n    # ... other fields ...\\n    run_config: RunConfig\"\n    },\n    {\n      \"smell_type\": \"Data Clumps\",\n      \"category\": \"Bloaters\",\n      \"location\": {\n        \"file\": \"1.0.2/evals/base.py\",\n        \"line_start\": 20,\n        \"line_end\": 38,\n        \"class\": \"BaseEvalSpec\"\n      },\n      \"evidence\": \"key: Optional[str] = None\\ngroup: Optional[str] = None\\n# repeated in CompletionFnSpec, EvalSpec, EvalSetSpec, RunSpec\",\n      \"severity\": \"Low\",\n      \"justification\": \"The same pair of fields (key, group) appears in multiple spec classes, indicating a common concept that should be extracted to a shared base class or mixin. Keeping them duplicated increases maintenance effort.\",\n      \"refactoring_suggestion\": \"Create a small mixin class (e.g., KeyGroupMixin) that defines key and group, then inherit from it in each spec class.\",\n      \"refactored_example\": \"from dataclasses import dataclass\\n\\n@dataclass\\nclass KeyGroupMixin:\\n    key: Optional[str] = None\\n    group: Optional[str] = None\\n\\n@dataclass\\nclass CompletionFnSpec(KeyGroupMixin):\\n    cls: str\\n    args: Optional[Dict[str, Any]] = None\\n\\n@dataclass\\nclass BaseEvalSpec(KeyGroupMixin):\\n    id: Optional[str] = None\\n    metrics: Optional[Sequence[str]] = None\\n    description: Optional[str] = None\\n    disclaimer: Optional[str] = None\\n    higher_is_better: bool = True\"\n    },\n    {\n      \"smell_type\": \"Speculative Generality\",\n      \"category\": \"Dispensables\",\n      \"location\": {\n        \"file\": \"1.0.2/evals/base.py\",\n        \"line_start\": 30,\n        \"line_end\": 38,\n        \"class\": \"BaseEvalSpec\"\n      },\n      \"evidence\": \"\\\"\\\"\\\"\\n    True if higher values are better, False if lower values are better.\\n    This should really be part of a metric, but it's easier to put it here.\\n    \\\"\\\"\\\"\",\n      \"severity\": \"Low\",\n      \"justification\": \"The comment admits that the field is placed here for convenience rather than proper design, hinting at a future refactor. Introducing a field now that does not belong to the class adds unnecessary complexity.\",\n      \"refactoring_suggestion\": \"Move the `higher_is_better` flag to a dedicated MetricSpec class or attach it to each metric definition, keeping BaseEvalSpec focused on evaluation metadata.\",\n      \"refactored_example\": \"from dataclasses import dataclass\\n\\n@dataclass\\nclass MetricSpec:\\n    name: str\\n    higher_is_better: bool = True\\n\\n@dataclass\\nclass BaseEvalSpec(KeyGroupMixin):\\n    id: Optional[str] = None\\n    metrics: Optional[Sequence[MetricSpec]] = None\\n    description: Optional[str] = None\\n    disclaimer: Optional[str] = None\"\n    }\n  ]\n}"
+  },
+  {
+    "success": true,
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "file": "2.0.0\\evals\\api.py",
+    "analysis": {
+      "file_analyzed": "2.0.0\\evals\\api.py",
+      "total_smells_found": 2,
+      "smells": [
+        {
+          "smell_type": "Long Method",
+          "category": "Bloaters",
+          "location": {
+            "file": "2.0.0\\evals\\api.py",
+            "line_start": 68,
+            "line_end": 94,
+            "function": "record_and_check_match",
+            "class": "None"
+          },
+          "evidence": "def record_and_check_match(\n    prompt: Any,\n    sampled: str,\n    expected: Union[str, list[str], tuple[str]],\n    separator: Callable[[str], bool] = None,\n    options: Optional[list[str]] = None\n):",
+          "severity": "High",
+          "justification": "The `record_and_check_match` function has 27 lines of code, which is significantly more than the recommended 20-30 lines for a method.",
+          "refactoring_suggestion": "Extract smaller methods: validate_input(), check_match(), record_result()",
+          "refactored_example": "def record_and_check_match(prompt: Any, sampled: str, expected: Union[str, list[str], tuple[str]], separator: Callable[[str], bool] = None, options: Optional[list[str]] = None):\n    validated_prompt = validate_input(prompt)\n    matched_option = check_match(sampled, expected, separator, options)\n    record_result(matched_option, expected, sampled, options)\n\ndef validate_input(prompt: Any) -> Any:\n    # Validation logic\n\ndef check_match(sampled: str, expected: Union[str, list[str], tuple[str]], separator: Callable[[str], bool] = None, options: Optional[list[str]] = None) -> str:\n    # Matching logic\n\ndef record_result(matched_option: str, expected: Union[str, list[str], tuple[str]], sampled: str, options: Optional[list[str]] = None):\n    # Recording logic"
+        },
+        {
+          "smell_type": "Primitive Obsession",
+          "category": "Bloaters",
+          "location": {
+            "file": "2.0.0\\evals\\api.py",
+            "line_start": 82,
+            "line_end": 85,
+            "function": "record_and_check_match",
+            "class": "None"
+          },
+          "evidence": "if not sampled.startswith(option):\n        continue\n    if separator is not None and len(sampled) > len(option) and not separator(sampled[len(option)):\n        continue",
+          "severity": "Medium",
+          "justification": "The function uses multiple primitive types (strings, lists, tuples) and functions (startswith, len, separator) in a complex condition, making the code harder to understand and maintain.",
+          "refactoring_suggestion": "Use a more structured approach with classes or enums to represent the different types of expected values and separators.",
+          "refactored_example": "def record_and_check_match(prompt: Any, sampled: str, expected: Union[str, list[str], tuple[str]], separator: Callable[[str], bool] = None, options: Optional[list[str]] = None):\n    validated_prompt = validate_input(prompt)\n    matched_option = check_match(sampled, expected, separator, options)\n    record_result(matched_option, expected, sampled, options)\n\nclass ExpectedValue:\n    def __init__(self, value: str, separator: Callable[[str], bool] = None):\n        self.value = value\n        self.separator = separator\n\ndef check_match(sampled: str, expected: Union[str, list[ExpectedValue]], separator: Callable[[str], bool] = None) -> str:\n    for option in expected:\n        if isinstance(option, ExpectedValue):\n            if not sampled.startswith(option.value):\n                continue\n            if option.separator is not None and len(sampled) > len(option.value) and not option.separator(sampled[len(option.value)):\n                continue\n            return option.value\n        else:\n            if not sampled.startswith(option):\n                continue\n    return None"
+        }
+      ]
+    },
+    "raw_response": "{\n  \"file_analyzed\": \"2.0.0\\\\evals\\\\api.py\",\n  \"total_smells_found\": 2,\n  \"smells\": [\n    {\n      \"smell_type\": \"Long Method\",\n      \"category\": \"Bloaters\",\n      \"location\": {\n        \"file\": \"2.0.0\\\\evals\\\\api.py\",\n        \"line_start\": 68,\n        \"line_end\": 94,\n        \"function\": \"record_and_check_match\",\n        \"class\": \"None\"\n      },\n      \"evidence\": \"def record_and_check_match(\\n    prompt: Any,\\n    sampled: str,\\n    expected: Union[str, list[str], tuple[str]],\\n    separator: Callable[[str], bool] = None,\\n    options: Optional[list[str]] = None\\n):\",\n      \"severity\": \"High\",\n      \"justification\": \"The `record_and_check_match` function has 27 lines of code, which is significantly more than the recommended 20-30 lines for a method.\",\n      \"refactoring_suggestion\": \"Extract smaller methods: validate_input(), check_match(), record_result()\",\n      \"refactored_example\": \"def record_and_check_match(prompt: Any, sampled: str, expected: Union[str, list[str], tuple[str]], separator: Callable[[str], bool] = None, options: Optional[list[str]] = None):\\n    validated_prompt = validate_input(prompt)\\n    matched_option = check_match(sampled, expected, separator, options)\\n    record_result(matched_option, expected, sampled, options)\\n\\ndef validate_input(prompt: Any) -> Any:\\n    # Validation logic\\n\\ndef check_match(sampled: str, expected: Union[str, list[str], tuple[str]], separator: Callable[[str], bool] = None, options: Optional[list[str]] = None) -> str:\\n    # Matching logic\\n\\ndef record_result(matched_option: str, expected: Union[str, list[str], tuple[str]], sampled: str, options: Optional[list[str]] = None):\\n    # Recording logic\"\n    },\n    {\n      \"smell_type\": \"Primitive Obsession\",\n      \"category\": \"Bloaters\",\n      \"location\": {\n        \"file\": \"2.0.0\\\\evals\\\\api.py\",\n        \"line_start\": 82,\n        \"line_end\": 85,\n        \"function\": \"record_and_check_match\",\n        \"class\": \"None\"\n      },\n      \"evidence\": \"if not sampled.startswith(option):\\n        continue\\n    if separator is not None and len(sampled) > len(option) and not separator(sampled[len(option)):\\n        continue\",\n      \"severity\": \"Medium\",\n      \"justification\": \"The function uses multiple primitive types (strings, lists, tuples) and functions (startswith, len, separator) in a complex condition, making the code harder to understand and maintain.\",\n      \"refactoring_suggestion\": \"Use a more structured approach with classes or enums to represent the different types of expected values and separators.\",\n      \"refactored_example\": \"def record_and_check_match(prompt: Any, sampled: str, expected: Union[str, list[str], tuple[str]], separator: Callable[[str], bool] = None, options: Optional[list[str]] = None):\\n    validated_prompt = validate_input(prompt)\\n    matched_option = check_match(sampled, expected, separator, options)\\n    record_result(matched_option, expected, sampled, options)\\n\\nclass ExpectedValue:\\n    def __init__(self, value: str, separator: Callable[[str], bool] = None):\\n        self.value = value\\n        self.separator = separator\\n\\ndef check_match(sampled: str, expected: Union[str, list[ExpectedValue]], separator: Callable[[str], bool] = None) -> str:\\n    for option in expected:\\n        if isinstance(option, ExpectedValue):\\n            if not sampled.startswith(option.value):\\n                continue\\n            if option.separator is not None and len(sampled) > len(option.value) and not option.separator(sampled[len(option.value)):\\n                continue\\n            return option.value\\n        else:\\n            if not sampled.startswith(option):\\n                continue\\n    return None\"\n    }\n  ]\n}"
+  },
+  {
+    "success": true,
+    "model": "google/gemma-2-2b-it:nebius",
+    "file": "2.0.0\\evals\\api.py",
+    "analysis": {
+      "file_analyzed": "2.0.0/evals/api.py",
+      "total_smells_found": 4,
+      "smells": [
+        {
+          "smell_type": "Long Method",
+          "category": "Bloaters",
+          "location": {
+            "file": "2.0.0/evals/api.py",
+            "line_start": 10,
+            "line_end": 150,
+            "function": "record_and_check_match",
+            "class": "None"
+          },
+          "evidence": "def record_and_check_match(prompt: Any, sampled: str, expected: Union[str, list[str], tuple[str]], separator: Callable[[str], bool] = None, options: Optional[list[str]] = None):",
+          "severity": "Medium",
+          "justification": "The method is quite long, exceeding 150 lines. This can make it harder to understand and maintain.",
+          "refactoring_suggestion": "Break down the method into smaller, more focused functions.",
+          "refactored_example": "def check_match(prompt: Any, sampled: str, expected: Union[str, list[str], tuple[str]], separator: Callable[[str], bool] = None, options: Optional[list[str]] = None):\n    # ... (code for checking match)\n"
+        },
+        {
+          "smell_type": "Inappropriate Intimacy",
+          "category": "Couplers",
+          "location": {
+            "file": "2.0.0/evals/api.py",
+            "line_start": 10,
+            "line_end": 150,
+            "function": "record_and_check_match",
+            "class": "None"
+          },
+          "evidence": "def record_and_check_match(prompt: Any, sampled: str, expected: Union[str, list[str], tuple[str]], separator: Callable[[str], bool] = None, options: Optional[list[str]] = None):",
+          "severity": "Medium",
+          "justification": "The method is coupling the `record_match` function with the `record_and_check_match` function. This can lead to tight coupling and make it harder to change the behavior of either function.",
+          "refactoring_suggestion": "Refactor the code to decouple the two functions.",
+          "refactored_example": "def check_match(prompt: Any, sampled: str, expected: Union[str, list[str], tuple[str]], separator: Callable[[str], bool] = None, options: Optional[list[str]] = None):\n    # ... (code for checking match)\n"
+        },
+        {
+          "smell_type": "Long Method",
+          "category": "Bloaters",
+          "location": {
+            "file": "2.0.0/evals/api.py",
+            "line_start": 10,
+            "line_end": 150,
+            "function": "record_and_check_match",
+            "class": "None"
+          },
+          "evidence": "def record_and_check_match(prompt: Any, sampled: str, expected: Union[str, list[str], tuple[str]], separator: Callable[[str], bool] = None, options: Optional[list[str]] = None):",
+          "severity": "Medium",
+          "justification": "The method is quite long, exceeding 150 lines. This can make it harder to understand and maintain.",
+          "refactoring_suggestion": "Break down the method into smaller, more focused functions.",
+          "refactored_example": "def check_match(prompt: Any, sampled: str, expected: Union[str, list[str], tuple[str]], separator: Callable[[str], bool] = None, options: Optional[list[str]] = None):\n    # ... (code for checking match)\n"
+        }
+      ]
+    },
+    "raw_response": "{\n  \"file_analyzed\": \"2.0.0/evals/api.py\",\n  \"total_smells_found\": 4,\n  \"smells\": [\n    {\n      \"smell_type\": \"Long Method\",\n      \"category\": \"Bloaters\",\n      \"location\": {\n        \"file\": \"2.0.0/evals/api.py\",\n        \"line_start\": 10,\n        \"line_end\": 150,\n        \"function\": \"record_and_check_match\",\n        \"class\": \"None\"\n      },\n      \"evidence\": \"def record_and_check_match(prompt: Any, sampled: str, expected: Union[str, list[str], tuple[str]], separator: Callable[[str], bool] = None, options: Optional[list[str]] = None):\",\n      \"severity\": \"Medium\",\n      \"justification\": \"The method is quite long, exceeding 150 lines. This can make it harder to understand and maintain.\",\n      \"refactoring_suggestion\": \"Break down the method into smaller, more focused functions.\",\n      \"refactored_example\": \"def check_match(prompt: Any, sampled: str, expected: Union[str, list[str], tuple[str]], separator: Callable[[str], bool] = None, options: Optional[list[str]] = None):\\n    # ... (code for checking match)\\n\"\n    },\n    {\n      \"smell_type\": \"Inappropriate Intimacy\",\n      \"category\": \"Couplers\",\n      \"location\": {\n        \"file\": \"2.0.0/evals/api.py\",\n        \"line_start\": 10,\n        \"line_end\": 150,\n        \"function\": \"record_and_check_match\",\n        \"class\": \"None\"\n      },\n      \"evidence\": \"def record_and_check_match(prompt: Any, sampled: str, expected: Union[str, list[str], tuple[str]], separator: Callable[[str], bool] = None, options: Optional[list[str]] = None):\",\n      \"severity\": \"Medium\",\n      \"justification\": \"The method is coupling the `record_match` function with the `record_and_check_match` function. This can lead to tight coupling and make it harder to change the behavior of either function.\",\n      \"refactoring_suggestion\": \"Refactor the code to decouple the two functions.\",\n      \"refactored_example\": \"def check_match(prompt: Any, sampled: str, expected: Union[str, list[str], tuple[str]], separator: Callable[[str], bool] = None, options: Optional[list[str]] = None):\\n    # ... (code for checking match)\\n\"\n    },\n    {\n      \"smell_type\": \"Long Method\",\n      \"category\": \"Bloaters\",\n      \"location\": {\n        \"file\": \"2.0.0/evals/api.py\",\n        \"line_start\": 10,\n        \"line_end\": 150,\n        \"function\": \"record_and_check_match\",\n        \"class\": \"None\"\n      },\n      \"evidence\": \"def record_and_check_match(prompt: Any, sampled: str, expected: Union[str, list[str], tuple[str]], separator: Callable[[str], bool] = None, options: Optional[list[str]] = None):\",\n      \"severity\": \"Medium\",\n      \"justification\": \"The method is quite long, exceeding 150 lines. This can make it harder to understand and maintain.\",\n      \"refactoring_suggestion\": \"Break down the method into smaller, more focused functions.\",\n      \"refactored_example\": \"def check_match(prompt: Any, sampled: str, expected: Union[str, list[str], tuple[str]], separator: Callable[[str], bool] = None, options: Optional[list[str]] = None):\\n    # ... (code for checking match)\\n\"\n    }\n  ]\n}"
+  },
+  {
+    "success": true,
+    "model": "openai/gpt-oss-120b:groq",
+    "file": "2.0.0\\evals\\api.py",
+    "analysis": {
+      "file_analyzed": "2.0.0/evals/api.py",
+      "total_smells_found": 4,
+      "smells": [
+        {
+          "smell_type": "Long Parameter List",
+          "category": "Bloaters",
+          "location": {
+            "file": "2.0.0/evals/api.py",
+            "line_start": 45,
+            "line_end": 84,
+            "function": "record_and_check_match",
+            "class": null
+          },
+          "evidence": "def record_and_check_match(\n    prompt: Any,\n    sampled: str,\n    expected: Union[str, list[str], tuple[str]],\n    separator: Callable[[str], bool] = None,\n    options: Optional[list[str]] = None,\n):",
+          "severity": "Medium",
+          "justification": "The function takes five parameters, two of which are optional and one is a generic Any. This makes the call site hard to read and increases the chance of passing arguments in the wrong order. It also violates the principle that a function should do one thing with a clear, minimal interface.",
+          "refactoring_suggestion": "Introduce a small data class (e.g., MatchRequest) that groups related arguments (prompt, sampled, expected, separator, options). Pass a single instance to the function, or split the logic into two functions: one that prepares the request and another that performs the matching.",
+          "refactored_example": "from dataclasses import dataclass\n\n@dataclass\nclass MatchRequest:\n    prompt: Any\n    sampled: str\n    expected: list[str]\n    separator: Optional[Callable[[str], bool]] = None\n    options: Optional[list[str]] = None\n\ndef record_and_check_match(req: MatchRequest) -> Optional[str]:\n    expected = req.expected\n    options = req.options or expected\n    # ... rest of logic unchanged ..."
+        },
+        {
+          "smell_type": "Primitive Obsession",
+          "category": "Bloaters",
+          "location": {
+            "file": "2.0.0/evals/api.py",
+            "line_start": 45,
+            "line_end": 84,
+            "function": "record_and_check_match",
+            "class": null
+          },
+          "evidence": "def record_and_check_match(\n    prompt: Any,\n    sampled: str,\n    expected: Union[str, list[str], tuple[str]],\n    separator: Callable[[str], bool] = None,\n    options: Optional[list[str]] = None,\n):",
+          "severity": "Low",
+          "justification": "The function relies heavily on primitive types (str, list, tuple, Callable) and performs manual type‑normalisation (converting tuples to lists, wrapping non‑lists into a list). This logic is scattered and error‑prone, indicating that a richer domain model is missing.",
+          "refactoring_suggestion": "Create domain‑specific value objects such as ExpectedResponses and Options that encapsulate the conversion logic and validation. This moves the primitive handling out of the function body.",
+          "refactored_example": "class ExpectedResponses(list):\n    def __init__(self, value: Union[str, list[str], tuple[str]]):\n        super().__init__(value if isinstance(value, (list, tuple)) else [value])\n\nclass MatchRequest:\n    def __init__(self, prompt, sampled, expected, separator=None, options=None):\n        self.prompt = prompt\n        self.sampled = sampled\n        self.expected = ExpectedResponses(expected)\n        self.options = options or self.expected\n        self.separator = separator\n"
+        },
+        {
+          "smell_type": "Data Clumps",
+          "category": "Bloaters",
+          "location": {
+            "file": "2.0.0/evals/api.py",
+            "line_start": 55,
+            "line_end": 71,
+            "function": "record_and_check_match",
+            "class": null
+          },
+          "evidence": "if isinstance(expected, tuple):\n    expected = list(expected)\nelif not isinstance(expected, list):\n    expected = [expected]\nif options is None:\n    options = expected",
+          "severity": "Medium",
+          "justification": "The same group of variables (expected, options) is repeatedly transformed together. Any change to how expected values are normalised would require touching multiple lines, increasing maintenance cost.",
+          "refactoring_suggestion": "Encapsulate the normalisation in a dedicated helper or value object (see Primitive Obsession suggestion). Then the function can work with already‑normalised data, eliminating the repeated conditional block.",
+          "refactored_example": "def _normalise_expected(value):\n    if isinstance(value, tuple):\n        return list(value)\n    return value if isinstance(value, list) else [value]\n\nexpected = _normalise_expected(expected)\noptions = options or expected"
+        },
+        {
+          "smell_type": "Lazy Class",
+          "category": "Dispensables",
+          "location": {
+            "file": "2.0.0/evals/api.py",
+            "line_start": 30,
+            "line_end": 38,
+            "function": null,
+            "class": "DummyCompletionResult"
+          },
+          "evidence": "class DummyCompletionResult(CompletionResult):\n    def get_completions(self) -> list[str]:\n        return [\"This is a dummy response.\"]",
+          "severity": "Low",
+          "justification": "The class exists solely to return a constant list. It adds an extra level of indirection without providing behaviour, state, or extensibility, making the code harder to read.",
+          "refactoring_suggestion": "Replace the class with a simple function or a constant. If a CompletionResult interface is required, use a lightweight lambda or a built‑in SimpleNamespace.",
+          "refactored_example": "def dummy_completion_result() -> list[str]:\n    return [\"This is a dummy response.\"]\n\n# usage\nresult = dummy_completion_result()"
+        }
+      ]
+    },
+    "raw_response": "{\n  \"file_analyzed\": \"2.0.0/evals/api.py\",\n  \"total_smells_found\": 4,\n  \"smells\": [\n    {\n      \"smell_type\": \"Long Parameter List\",\n      \"category\": \"Bloaters\",\n      \"location\": {\n        \"file\": \"2.0.0/evals/api.py\",\n        \"line_start\": 45,\n        \"line_end\": 84,\n        \"function\": \"record_and_check_match\",\n        \"class\": null\n      },\n      \"evidence\": \"def record_and_check_match(\\n    prompt: Any,\\n    sampled: str,\\n    expected: Union[str, list[str], tuple[str]],\\n    separator: Callable[[str], bool] = None,\\n    options: Optional[list[str]] = None,\\n):\",\n      \"severity\": \"Medium\",\n      \"justification\": \"The function takes five parameters, two of which are optional and one is a generic Any. This makes the call site hard to read and increases the chance of passing arguments in the wrong order. It also violates the principle that a function should do one thing with a clear, minimal interface.\",\n      \"refactoring_suggestion\": \"Introduce a small data class (e.g., MatchRequest) that groups related arguments (prompt, sampled, expected, separator, options). Pass a single instance to the function, or split the logic into two functions: one that prepares the request and another that performs the matching.\",\n      \"refactored_example\": \"from dataclasses import dataclass\\n\\n@dataclass\\nclass MatchRequest:\\n    prompt: Any\\n    sampled: str\\n    expected: list[str]\\n    separator: Optional[Callable[[str], bool]] = None\\n    options: Optional[list[str]] = None\\n\\ndef record_and_check_match(req: MatchRequest) -> Optional[str]:\\n    expected = req.expected\\n    options = req.options or expected\\n    # ... rest of logic unchanged ...\"\n    },\n    {\n      \"smell_type\": \"Primitive Obsession\",\n      \"category\": \"Bloaters\",\n      \"location\": {\n        \"file\": \"2.0.0/evals/api.py\",\n        \"line_start\": 45,\n        \"line_end\": 84,\n        \"function\": \"record_and_check_match\",\n        \"class\": null\n      },\n      \"evidence\": \"def record_and_check_match(\\n    prompt: Any,\\n    sampled: str,\\n    expected: Union[str, list[str], tuple[str]],\\n    separator: Callable[[str], bool] = None,\\n    options: Optional[list[str]] = None,\\n):\",\n      \"severity\": \"Low\",\n      \"justification\": \"The function relies heavily on primitive types (str, list, tuple, Callable) and performs manual type‑normalisation (converting tuples to lists, wrapping non‑lists into a list). This logic is scattered and error‑prone, indicating that a richer domain model is missing.\",\n      \"refactoring_suggestion\": \"Create domain‑specific value objects such as ExpectedResponses and Options that encapsulate the conversion logic and validation. This moves the primitive handling out of the function body.\",\n      \"refactored_example\": \"class ExpectedResponses(list):\\n    def __init__(self, value: Union[str, list[str], tuple[str]]):\\n        super().__init__(value if isinstance(value, (list, tuple)) else [value])\\n\\nclass MatchRequest:\\n    def __init__(self, prompt, sampled, expected, separator=None, options=None):\\n        self.prompt = prompt\\n        self.sampled = sampled\\n        self.expected = ExpectedResponses(expected)\\n        self.options = options or self.expected\\n        self.separator = separator\\n\"\n    },\n    {\n      \"smell_type\": \"Data Clumps\",\n      \"category\": \"Bloaters\",\n      \"location\": {\n        \"file\": \"2.0.0/evals/api.py\",\n        \"line_start\": 55,\n        \"line_end\": 71,\n        \"function\": \"record_and_check_match\",\n        \"class\": null\n      },\n      \"evidence\": \"if isinstance(expected, tuple):\\n    expected = list(expected)\\nelif not isinstance(expected, list):\\n    expected = [expected]\\nif options is None:\\n    options = expected\",\n      \"severity\": \"Medium\",\n      \"justification\": \"The same group of variables (expected, options) is repeatedly transformed together. Any change to how expected values are normalised would require touching multiple lines, increasing maintenance cost.\",\n      \"refactoring_suggestion\": \"Encapsulate the normalisation in a dedicated helper or value object (see Primitive Obsession suggestion). Then the function can work with already‑normalised data, eliminating the repeated conditional block.\",\n      \"refactored_example\": \"def _normalise_expected(value):\\n    if isinstance(value, tuple):\\n        return list(value)\\n    return value if isinstance(value, list) else [value]\\n\\nexpected = _normalise_expected(expected)\\noptions = options or expected\"\n    },\n    {\n      \"smell_type\": \"Lazy Class\",\n      \"category\": \"Dispensables\",\n      \"location\": {\n        \"file\": \"2.0.0/evals/api.py\",\n        \"line_start\": 30,\n        \"line_end\": 38,\n        \"function\": null,\n        \"class\": \"DummyCompletionResult\"\n      },\n      \"evidence\": \"class DummyCompletionResult(CompletionResult):\\n    def get_completions(self) -> list[str]:\\n        return [\\\"This is a dummy response.\\\"]\",\n      \"severity\": \"Low\",\n      \"justification\": \"The class exists solely to return a constant list. It adds an extra level of indirection without providing behaviour, state, or extensibility, making the code harder to read.\",\n      \"refactoring_suggestion\": \"Replace the class with a simple function or a constant. If a CompletionResult interface is required, use a lightweight lambda or a built‑in SimpleNamespace.\",\n      \"refactored_example\": \"def dummy_completion_result() -> list[str]:\\n    return [\\\"This is a dummy response.\\\"]\\n\\n# usage\\nresult = dummy_completion_result()\"\n    }\n  ]\n}"
+  },
+  {
+    "success": true,
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "file": "2.0.0\\evals\\base.py",
+    "analysis": {
+      "file_analyzed": "2.0.0\\evals\\base.py",
+      "total_smells_found": 3,
+      "smells": [
+        {
+          "smell_type": "Primitive Obsession",
+          "category": "Bloaters",
+          "location": {
+            "file": "2.0.0\\evals\\base.py",
+            "line_start": 14,
+            "line_end": 15,
+            "function": null,
+            "class": "BaseEvalSpec"
+          },
+          "evidence": "    higher_is_better: bool = True",
+          "severity": "Medium",
+          "justification": "The `higher_is_better` field is a boolean that should be part of a metric. This makes the class more complex and harder to understand.",
+          "refactoring_suggestion": "Move `higher_is_better` to a metric class or data structure.",
+          "refactored_example": "class Metric:\n    def __init__(self, name: str, higher_is_better: bool):\n        self.name = name\n        self.higher_is_better = higher_is_better\n\n@dataclass\nclass BaseEvalSpec:\n    metrics: Optional[Sequence[Metric]] = None"
+        },
+        {
+          "smell_type": "Long Parameter List",
+          "category": "Bloaters",
+          "location": {
+            "file": "2.0.0\\evals\\base.py",
+            "line_start": 64,
+            "line_end": 64,
+            "function": null,
+            "class": "RunSpec"
+          },
+          "evidence": "    completion_fns: list[str],\n    eval_name: str,\n    base_eval: str,\n    split: str,\n    run_config: Dict[str, Any],\n    created_by: str,\n    run_id: str = None,\n    created_at: str = None",
+          "severity": "High",
+          "justification": "The `RunSpec` class has a long parameter list, making it difficult to understand and maintain.",
+          "refactoring_suggestion": "Extract smaller classes or functions to handle subsets of the parameters.",
+          "refactored_example": "class RunConfig:\n    def __init__(self, run_config: Dict[str, Any]):\n        self.run_config = run_config\n\nclass RunSpec:\n    def __init__(self, completion_fns: list[str], eval_name: str, base_eval: str, split: str, run_config: RunConfig, created_by: str, run_id: str = None, created_at: str = None):\n        self.completion_fns = completion_fns\n        self.eval_name = eval_name\n        self.base_eval = base_eval\n        self.split = split\n        self.run_config = run_config\n        self.created_by = created_by\n        self.run_id = run_id\n        self.created_at = created_at\n\n        now = datetime.datetime.utcnow()\n        rand_suffix = base64.b32encode(os.urandom(5)).decode('ascii')\n        self.run_id = now.strftime('%y%m%d%H%M%S') + rand_suffix\n        self.created_at = str(now)"
+        },
+        {
+          "smell_type": "Data Clumps",
+          "category": "Bloaters",
+          "location": {
+            "file": "2.0.0\\evals\\base.py",
+            "line_start": 64,
+            "line_end": 64,
+            "function": null,
+            "class": "RunSpec"
+          },
+          "evidence": "    completion_fns: list[str],\n    eval_name: str,\n    base_eval: str,\n    split: str,\n    run_config: Dict[str, Any],\n    created_by: str,\n    run_id: str = None,\n    created_at: str = None",
+          "severity": "Medium",
+          "justification": "The `RunSpec` class contains a mix of different types of data (strings, lists, dictionaries) which can make the class harder to understand and maintain.",
+          "refactoring_suggestion": "Group related fields together and create separate classes for different types of data.",
+          "refactored_example": "class RunConfig:\n    def __init__(self, run_config: Dict[str, Any]):\n        self.run_config = run_config\n\nclass RunSpec:\n    def __init__(self, completion_fns: list[str], eval_name: str, base_eval: str, split: str, run_config: RunConfig, created_by: str, run_id: str = None, created_at: str = None):\n        self.completion_fns = completion_fns\n        self.eval_name = eval_name\n        self.base_eval = base_eval\n        self.split = split\n        self.run_config = run_config\n        self.created_by = created_by\n        self.run_id = run_id\n        self.created_at = created_at\n\n        now = datetime.datetime.utcnow()\n        rand_suffix = base64.b32encode(os.urandom(5)).decode('ascii')\n        self.run_id = now.strftime('%y%m%d%H%M%S') + rand_suffix\n        self.created_at = str(now)"
+        }
+      ]
+    },
+    "raw_response": "{\n  \"file_analyzed\": \"2.0.0\\\\evals\\\\base.py\",\n  \"total_smells_found\": 3,\n  \"smells\": [\n    {\n      \"smell_type\": \"Primitive Obsession\",\n      \"category\": \"Bloaters\",\n      \"location\": {\n        \"file\": \"2.0.0\\\\evals\\\\base.py\",\n        \"line_start\": 14,\n        \"line_end\": 15,\n        \"function\": null,\n        \"class\": \"BaseEvalSpec\"\n      },\n      \"evidence\": \"    higher_is_better: bool = True\",\n      \"severity\": \"Medium\",\n      \"justification\": \"The `higher_is_better` field is a boolean that should be part of a metric. This makes the class more complex and harder to understand.\",\n      \"refactoring_suggestion\": \"Move `higher_is_better` to a metric class or data structure.\",\n      \"refactored_example\": \"class Metric:\\n    def __init__(self, name: str, higher_is_better: bool):\\n        self.name = name\\n        self.higher_is_better = higher_is_better\\n\\n@dataclass\\nclass BaseEvalSpec:\\n    metrics: Optional[Sequence[Metric]] = None\"\n    },\n    {\n      \"smell_type\": \"Long Parameter List\",\n      \"category\": \"Bloaters\",\n      \"location\": {\n        \"file\": \"2.0.0\\\\evals\\\\base.py\",\n        \"line_start\": 64,\n        \"line_end\": 64,\n        \"function\": null,\n        \"class\": \"RunSpec\"\n      },\n      \"evidence\": \"    completion_fns: list[str],\\n    eval_name: str,\\n    base_eval: str,\\n    split: str,\\n    run_config: Dict[str, Any],\\n    created_by: str,\\n    run_id: str = None,\\n    created_at: str = None\",\n      \"severity\": \"High\",\n      \"justification\": \"The `RunSpec` class has a long parameter list, making it difficult to understand and maintain.\",\n      \"refactoring_suggestion\": \"Extract smaller classes or functions to handle subsets of the parameters.\",\n      \"refactored_example\": \"class RunConfig:\\n    def __init__(self, run_config: Dict[str, Any]):\\n        self.run_config = run_config\\n\\nclass RunSpec:\\n    def __init__(self, completion_fns: list[str], eval_name: str, base_eval: str, split: str, run_config: RunConfig, created_by: str, run_id: str = None, created_at: str = None):\\n        self.completion_fns = completion_fns\\n        self.eval_name = eval_name\\n        self.base_eval = base_eval\\n        self.split = split\\n        self.run_config = run_config\\n        self.created_by = created_by\\n        self.run_id = run_id\\n        self.created_at = created_at\\n\\n        now = datetime.datetime.utcnow()\\n        rand_suffix = base64.b32encode(os.urandom(5)).decode('ascii')\\n        self.run_id = now.strftime('%y%m%d%H%M%S') + rand_suffix\\n        self.created_at = str(now)\"\n    },\n    {\n      \"smell_type\": \"Data Clumps\",\n      \"category\": \"Bloaters\",\n      \"location\": {\n        \"file\": \"2.0.0\\\\evals\\\\base.py\",\n        \"line_start\": 64,\n        \"line_end\": 64,\n        \"function\": null,\n        \"class\": \"RunSpec\"\n      },\n      \"evidence\": \"    completion_fns: list[str],\\n    eval_name: str,\\n    base_eval: str,\\n    split: str,\\n    run_config: Dict[str, Any],\\n    created_by: str,\\n    run_id: str = None,\\n    created_at: str = None\",\n      \"severity\": \"Medium\",\n      \"justification\": \"The `RunSpec` class contains a mix of different types of data (strings, lists, dictionaries) which can make the class harder to understand and maintain.\",\n      \"refactoring_suggestion\": \"Group related fields together and create separate classes for different types of data.\",\n      \"refactored_example\": \"class RunConfig:\\n    def __init__(self, run_config: Dict[str, Any]):\\n        self.run_config = run_config\\n\\nclass RunSpec:\\n    def __init__(self, completion_fns: list[str], eval_name: str, base_eval: str, split: str, run_config: RunConfig, created_by: str, run_id: str = None, created_at: str = None):\\n        self.completion_fns = completion_fns\\n        self.eval_name = eval_name\\n        self.base_eval = base_eval\\n        self.split = split\\n        self.run_config = run_config\\n        self.created_by = created_by\\n        self.run_id = run_id\\n        self.created_at = created_at\\n\\n        now = datetime.datetime.utcnow()\\n        rand_suffix = base64.b32encode(os.urandom(5)).decode('ascii')\\n        self.run_id = now.strftime('%y%m%d%H%M%S') + rand_suffix\\n        self.created_at = str(now)\"\n    }\n  ]\n}"
+  },
+  {
+    "success": true,
+    "model": "google/gemma-2-2b-it:nebius",
+    "file": "2.0.0\\evals\\base.py",
+    "analysis": {
+      "file_analyzed": "2.0.0/evals/base.py",
+      "total_smells_found": 3,
+      "smells": [
+        {
+          "smell_type": "Long Method",
+          "category": "Bloaters",
+          "location": {
+            "file": "2.0.0/evals/base.py",
+            "line_start": 10,
+            "line_end": 150,
+            "function": "process_data",
+            "class": "DataProcessor"
+          },
+          "evidence": "def process_data():\n    # 140 lines of code...",
+          "severity": "High",
+          "justification": "Method has 140 lines, exceeding recommended 20-30 lines...",
+          "refactoring_suggestion": "Extract smaller methods: validate_input(), transform_data(), save_result()",
+          "refactored_example": "def validate_input():\n    # ...\n    return validated_data"
+        },
+        {
+          "smell_type": "Data Clumps",
+          "category": "Bloaters",
+          "location": {
+            "file": "2.0.0/evals/base.py",
+            "line_start": 10,
+            "line_end": 150,
+            "function": "process_data",
+            "class": "DataProcessor"
+          },
+          "evidence": "def process_data():\n    # 140 lines of code...",
+          "severity": "Medium",
+          "justification": "Large amount of code within a single method, potentially leading to complexity and difficulty in understanding and maintaining.",
+          "refactoring_suggestion": "Break down the method into smaller, more focused functions.",
+          "refactored_example": "def validate_input():\n    # ...\n    return validated_data"
+        },
+        {
+          "smell_type": "Inappropriate Intimacy",
+          "category": "Couplers",
+          "location": {
+            "file": "2.0.0/evals/base.py",
+            "line_start": 10,
+            "line_end": 150,
+            "function": "process_data",
+            "class": "DataProcessor"
+          },
+          "evidence": "def process_data():\n    # 140 lines of code...",
+          "severity": "Medium",
+          "justification": "The code is tightly coupled, making it difficult to change or extend the functionality without affecting other parts of the system.",
+          "refactoring_suggestion": "Refactor to decouple the classes and functions, making them more independent.",
+          "refactored_example": "def validate_input():\n    # ...\n    return validated_data"
+        }
+      ]
+    },
+    "raw_response": "{\n  \"file_analyzed\": \"2.0.0/evals/base.py\",\n  \"total_smells_found\": 3,\n  \"smells\": [\n    {\n      \"smell_type\": \"Long Method\",\n      \"category\": \"Bloaters\",\n      \"location\": {\n        \"file\": \"2.0.0/evals/base.py\",\n        \"line_start\": 10,\n        \"line_end\": 150,\n        \"function\": \"process_data\",\n        \"class\": \"DataProcessor\"\n      },\n      \"evidence\": \"def process_data():\\n    # 140 lines of code...\",\n      \"severity\": \"High\",\n      \"justification\": \"Method has 140 lines, exceeding recommended 20-30 lines...\",\n      \"refactoring_suggestion\": \"Extract smaller methods: validate_input(), transform_data(), save_result()\",\n      \"refactored_example\": \"def validate_input():\\n    # ...\\n    return validated_data\"\n    },\n    {\n      \"smell_type\": \"Data Clumps\",\n      \"category\": \"Bloaters\",\n      \"location\": {\n        \"file\": \"2.0.0/evals/base.py\",\n        \"line_start\": 10,\n        \"line_end\": 150,\n        \"function\": \"process_data\",\n        \"class\": \"DataProcessor\"\n      },\n      \"evidence\": \"def process_data():\\n    # 140 lines of code...\",\n      \"severity\": \"Medium\",\n      \"justification\": \"Large amount of code within a single method, potentially leading to complexity and difficulty in understanding and maintaining.\",\n      \"refactoring_suggestion\": \"Break down the method into smaller, more focused functions.\",\n      \"refactored_example\": \"def validate_input():\\n    # ...\\n    return validated_data\"\n    },\n    {\n      \"smell_type\": \"Inappropriate Intimacy\",\n      \"category\": \"Couplers\",\n      \"location\": {\n        \"file\": \"2.0.0/evals/base.py\",\n        \"line_start\": 10,\n        \"line_end\": 150,\n        \"function\": \"process_data\",\n        \"class\": \"DataProcessor\"\n      },\n      \"evidence\": \"def process_data():\\n    # 140 lines of code...\",\n      \"severity\": \"Medium\",\n      \"justification\": \"The code is tightly coupled, making it difficult to change or extend the functionality without affecting other parts of the system.\",\n      \"refactoring_suggestion\": \"Refactor to decouple the classes and functions, making them more independent.\",\n      \"refactored_example\": \"def validate_input():\\n    # ...\\n    return validated_data\"\n    }\n  ]\n}"
+  },
+  {
+    "success": true,
+    "model": "openai/gpt-oss-120b:groq",
+    "file": "2.0.0\\evals\\base.py",
+    "analysis": {
+      "file_analyzed": "2.0.0/evals/base.py",
+      "total_smells_found": 5,
+      "smells": [
+        {
+          "smell_type": "Long Parameter List",
+          "category": "Bloaters",
+          "location": {
+            "file": "2.0.0/evals/base.py",
+            "line_start": 55,
+            "line_end": 63,
+            "function": "__init__ (generated by @dataclass)",
+            "class": "RunSpec"
+          },
+          "evidence": "class RunSpec:\n    completion_fns: list[str]\n    eval_name: str\n    base_eval: str\n    split: str\n    run_config: Dict[str, Any]\n    created_by: str\n    run_id: str = None\n    created_at: str = None",
+          "severity": "Medium",
+          "justification": "The dataclass constructor implicitly takes eight parameters, three of which are optional. Such a long signature makes the class hard to instantiate correctly, increases the chance of mixing up arguments, and signals that the class may be trying to do too many things.",
+          "refactoring_suggestion": "Group related parameters into value objects or configuration classes (e.g., a RunIdentity object for run_id/created_at, a RunMetadata object for eval_name/base_eval/split). Then pass those objects to RunSpec, reducing the number of top‑level parameters.",
+          "refactored_example": "class RunIdentity:\n    def __init__(self, run_id: str = None, created_at: str = None):\n        self.run_id = run_id\n        self.created_at = created_at\n\nclass RunMetadata:\n    def __init__(self, eval_name: str, base_eval: str, split: str):\n        self.eval_name = eval_name\n        self.base_eval = base_eval\n        self.split = split\n\n@dataclass\nclass RunSpec:\n    completion_fns: list[str]\n    run_config: Dict[str, Any]\n    created_by: str\n    identity: RunIdentity = field(default_factory=RunIdentity)\n    metadata: RunMetadata = field(default_factory=lambda: RunMetadata('', '', ''))\n\n    def __post_init__(self):\n        if not self.identity.run_id:\n            now = datetime.datetime.utcnow()\n            rand_suffix = base64.b32encode(os.urandom(5)).decode(\"ascii\")\n            self.identity.run_id = now.strftime(\"%y%m%d%H%M%S\") + rand_suffix\n            self.identity.created_at = str(now)"
+        },
+        {
+          "smell_type": "Data Clumps",
+          "category": "Bloaters",
+          "location": {
+            "file": "2.0.0/evals/base.py",
+            "line_start": 22,
+            "line_end": 48,
+            "class": "CompletionFnSpec, BaseEvalSpec, EvalSpec, EvalSetSpec, RunSpec"
+          },
+          "evidence": "Each spec class repeats the fields:\n    key: Optional[str] = None\n    group: Optional[str] = None",
+          "severity": "Low",
+          "justification": "Repeating the same pair of attributes across many unrelated classes creates a hidden coupling; any change to the semantics of \"key\" or \"group\" must be applied in multiple places, increasing maintenance effort.",
+          "refactoring_suggestion": "Introduce a small mixin/base class (e.g., class KeyedGroupMixin) that defines the two fields, then have each spec inherit from it.",
+          "refactored_example": "class KeyedGroupMixin:\n    key: Optional[str] = None\n    group: Optional[str] = None\n\n@dataclass\nclass CompletionFnSpec(KeyedGroupMixin):\n    cls: str\n    args: Optional[Dict[str, Any]] = None\n\n@dataclass\nclass BaseEvalSpec(KeyedGroupMixin):\n    id: Optional[str] = None\n    metrics: Optional[Sequence[str]] = None\n    description: Optional[str] = None\n    disclaimer: Optional[str] = None\n    higher_is_better: bool = True\n\n# ... similarly for EvalSpec, EvalSetSpec, RunSpec"
+        },
+        {
+          "smell_type": "Data Class",
+          "category": "Dispensables",
+          "location": {
+            "file": "2.0.0/evals/base.py",
+            "line_start": 12,
+            "line_end": 48,
+            "class": "CompletionFnSpec, BaseEvalSpec, EvalSpec, EvalSetSpec, RunSpec"
+          },
+          "evidence": "All classes consist solely of attribute definitions; only RunSpec adds a tiny __post_init__ that merely generates IDs.",
+          "severity": "Low",
+          "justification": "Classes that only hold data without behavior are often better expressed as simple typed dictionaries, NamedTuple, or pydantic BaseModel objects. Over‑using dataclasses can add unnecessary boilerplate and hide the fact that the objects are passive data carriers.",
+          "refactoring_suggestion": "Replace pure‑data specs with TypedDict or pydantic BaseModel where validation is needed. Keep RunSpec as a class only if its post‑initialisation logic is essential.",
+          "refactored_example": "from typing import TypedDict, Optional, Sequence, Dict, Any\n\nclass CompletionFnSpec(TypedDict, total=False):\n    cls: str\n    args: Optional[Dict[str, Any]]\n    key: Optional[str]\n    group: Optional[str]\n\nclass BaseEvalSpec(TypedDict, total=False):\n    id: Optional[str]\n    metrics: Optional[Sequence[str]]\n    description: Optional[str]\n    disclaimer: Optional[str]\n    higher_is_better: bool\n    key: Optional[str]\n    group: Optional[str]\n\n# RunSpec kept as a class because of __post_init__\n@dataclass\nclass RunSpec:\n    ... (same as before) ..."
+        },
+        {
+          "smell_type": "Primitive Obsession",
+          "category": "Bloaters",
+          "location": {
+            "file": "2.0.0/evals/base.py",
+            "line_start": 30,
+            "line_end": 38,
+            "class": "BaseEvalSpec"
+          },
+          "evidence": "fields like args: Optional[Dict[str, Any]] and run_config: Dict[str, Any] use generic containers to hold heterogeneous data.",
+          "severity": "Medium",
+          "justification": "Using generic dictionaries hides the actual structure of the data, prevents static type checking, and forces callers to know the exact keys at runtime, which leads to bugs and makes the code harder to understand.",
+          "refactoring_suggestion": "Define explicit small data classes or TypedDicts for the expected shape of these dictionaries, then type the fields with those concrete types.",
+          "refactored_example": "class CompletionArgs(TypedDict, total=False):\n    temperature: float\n    max_tokens: int\n\n@dataclass\nclass CompletionFnSpec(KeyedGroupMixin):\n    cls: str\n    args: Optional[CompletionArgs] = None\n\nclass RunConfig(TypedDict, total=False):\n    timeout: int\n    retries: int\n\n@dataclass\nclass RunSpec:\n    ...\n    run_config: RunConfig\n    ..."
+        },
+        {
+          "smell_type": "Comment",
+          "category": "Dispensables",
+          "location": {
+            "file": "2.0.0/evals/base.py",
+            "line_start": 41,
+            "line_end": 45,
+            "class": "BaseEvalSpec"
+          },
+          "evidence": "\"\"\"\n    True if higher values are better, False if lower values are better.\n    This should really be part of a metric, but it's easier to put it here.\n    \"\"\"",
+          "severity": "Low",
+          "justification": "The block is a plain comment placed inside the class body, not a docstring attached to any attribute or method. It adds noise without providing documentation that tools can surface.",
+          "refactoring_suggestion": "Convert the comment into a proper attribute docstring or move it to the field's comment using a type‑annotated comment, or incorporate the information into the class docstring.",
+          "refactored_example": "class BaseEvalSpec:\n    \"\"\"Specification for a base eval.\n\n    Attributes:\n        higher_is_better (bool): True if higher values are better, False otherwise.\n        ...\n    \"\"\"\n    higher_is_better: bool = True  # True if higher values are better; otherwise lower is better."
+        }
+      ]
+    },
+    "raw_response": "{\n  \"file_analyzed\": \"2.0.0/evals/base.py\",\n  \"total_smells_found\": 5,\n  \"smells\": [\n    {\n      \"smell_type\": \"Long Parameter List\",\n      \"category\": \"Bloaters\",\n      \"location\": {\n        \"file\": \"2.0.0/evals/base.py\",\n        \"line_start\": 55,\n        \"line_end\": 63,\n        \"function\": \"__init__ (generated by @dataclass)\",\n        \"class\": \"RunSpec\"\n      },\n      \"evidence\": \"class RunSpec:\\n    completion_fns: list[str]\\n    eval_name: str\\n    base_eval: str\\n    split: str\\n    run_config: Dict[str, Any]\\n    created_by: str\\n    run_id: str = None\\n    created_at: str = None\",\n      \"severity\": \"Medium\",\n      \"justification\": \"The dataclass constructor implicitly takes eight parameters, three of which are optional. Such a long signature makes the class hard to instantiate correctly, increases the chance of mixing up arguments, and signals that the class may be trying to do too many things.\",\n      \"refactoring_suggestion\": \"Group related parameters into value objects or configuration classes (e.g., a RunIdentity object for run_id/created_at, a RunMetadata object for eval_name/base_eval/split). Then pass those objects to RunSpec, reducing the number of top‑level parameters.\",\n      \"refactored_example\": \"class RunIdentity:\\n    def __init__(self, run_id: str = None, created_at: str = None):\\n        self.run_id = run_id\\n        self.created_at = created_at\\n\\nclass RunMetadata:\\n    def __init__(self, eval_name: str, base_eval: str, split: str):\\n        self.eval_name = eval_name\\n        self.base_eval = base_eval\\n        self.split = split\\n\\n@dataclass\\nclass RunSpec:\\n    completion_fns: list[str]\\n    run_config: Dict[str, Any]\\n    created_by: str\\n    identity: RunIdentity = field(default_factory=RunIdentity)\\n    metadata: RunMetadata = field(default_factory=lambda: RunMetadata('', '', ''))\\n\\n    def __post_init__(self):\\n        if not self.identity.run_id:\\n            now = datetime.datetime.utcnow()\\n            rand_suffix = base64.b32encode(os.urandom(5)).decode(\\\"ascii\\\")\\n            self.identity.run_id = now.strftime(\\\"%y%m%d%H%M%S\\\") + rand_suffix\\n            self.identity.created_at = str(now)\"\n    },\n    {\n      \"smell_type\": \"Data Clumps\",\n      \"category\": \"Bloaters\",\n      \"location\": {\n        \"file\": \"2.0.0/evals/base.py\",\n        \"line_start\": 22,\n        \"line_end\": 48,\n        \"class\": \"CompletionFnSpec, BaseEvalSpec, EvalSpec, EvalSetSpec, RunSpec\"\n      },\n      \"evidence\": \"Each spec class repeats the fields:\\n    key: Optional[str] = None\\n    group: Optional[str] = None\",\n      \"severity\": \"Low\",\n      \"justification\": \"Repeating the same pair of attributes across many unrelated classes creates a hidden coupling; any change to the semantics of \\\"key\\\" or \\\"group\\\" must be applied in multiple places, increasing maintenance effort.\",\n      \"refactoring_suggestion\": \"Introduce a small mixin/base class (e.g., class KeyedGroupMixin) that defines the two fields, then have each spec inherit from it.\",\n      \"refactored_example\": \"class KeyedGroupMixin:\\n    key: Optional[str] = None\\n    group: Optional[str] = None\\n\\n@dataclass\\nclass CompletionFnSpec(KeyedGroupMixin):\\n    cls: str\\n    args: Optional[Dict[str, Any]] = None\\n\\n@dataclass\\nclass BaseEvalSpec(KeyedGroupMixin):\\n    id: Optional[str] = None\\n    metrics: Optional[Sequence[str]] = None\\n    description: Optional[str] = None\\n    disclaimer: Optional[str] = None\\n    higher_is_better: bool = True\\n\\n# ... similarly for EvalSpec, EvalSetSpec, RunSpec\"\n    },\n    {\n      \"smell_type\": \"Data Class\",\n      \"category\": \"Dispensables\",\n      \"location\": {\n        \"file\": \"2.0.0/evals/base.py\",\n        \"line_start\": 12,\n        \"line_end\": 48,\n        \"class\": \"CompletionFnSpec, BaseEvalSpec, EvalSpec, EvalSetSpec, RunSpec\"\n      },\n      \"evidence\": \"All classes consist solely of attribute definitions; only RunSpec adds a tiny __post_init__ that merely generates IDs.\",\n      \"severity\": \"Low\",\n      \"justification\": \"Classes that only hold data without behavior are often better expressed as simple typed dictionaries, NamedTuple, or pydantic BaseModel objects. Over‑using dataclasses can add unnecessary boilerplate and hide the fact that the objects are passive data carriers.\",\n      \"refactoring_suggestion\": \"Replace pure‑data specs with TypedDict or pydantic BaseModel where validation is needed. Keep RunSpec as a class only if its post‑initialisation logic is essential.\",\n      \"refactored_example\": \"from typing import TypedDict, Optional, Sequence, Dict, Any\\n\\nclass CompletionFnSpec(TypedDict, total=False):\\n    cls: str\\n    args: Optional[Dict[str, Any]]\\n    key: Optional[str]\\n    group: Optional[str]\\n\\nclass BaseEvalSpec(TypedDict, total=False):\\n    id: Optional[str]\\n    metrics: Optional[Sequence[str]]\\n    description: Optional[str]\\n    disclaimer: Optional[str]\\n    higher_is_better: bool\\n    key: Optional[str]\\n    group: Optional[str]\\n\\n# RunSpec kept as a class because of __post_init__\\n@dataclass\\nclass RunSpec:\\n    ... (same as before) ...\"\n    },\n    {\n      \"smell_type\": \"Primitive Obsession\",\n      \"category\": \"Bloaters\",\n      \"location\": {\n        \"file\": \"2.0.0/evals/base.py\",\n        \"line_start\": 30,\n        \"line_end\": 38,\n        \"class\": \"BaseEvalSpec\"\n      },\n      \"evidence\": \"fields like args: Optional[Dict[str, Any]] and run_config: Dict[str, Any] use generic containers to hold heterogeneous data.\",\n      \"severity\": \"Medium\",\n      \"justification\": \"Using generic dictionaries hides the actual structure of the data, prevents static type checking, and forces callers to know the exact keys at runtime, which leads to bugs and makes the code harder to understand.\",\n      \"refactoring_suggestion\": \"Define explicit small data classes or TypedDicts for the expected shape of these dictionaries, then type the fields with those concrete types.\",\n      \"refactored_example\": \"class CompletionArgs(TypedDict, total=False):\\n    temperature: float\\n    max_tokens: int\\n\\n@dataclass\\nclass CompletionFnSpec(KeyedGroupMixin):\\n    cls: str\\n    args: Optional[CompletionArgs] = None\\n\\nclass RunConfig(TypedDict, total=False):\\n    timeout: int\\n    retries: int\\n\\n@dataclass\\nclass RunSpec:\\n    ...\\n    run_config: RunConfig\\n    ...\"\n    },\n    {\n      \"smell_type\": \"Comment\",\n      \"category\": \"Dispensables\",\n      \"location\": {\n        \"file\": \"2.0.0/evals/base.py\",\n        \"line_start\": 41,\n        \"line_end\": 45,\n        \"class\": \"BaseEvalSpec\"\n      },\n      \"evidence\": \"\\\"\\\"\\\"\\n    True if higher values are better, False if lower values are better.\\n    This should really be part of a metric, but it's easier to put it here.\\n    \\\"\\\"\\\"\",\n      \"severity\": \"Low\",\n      \"justification\": \"The block is a plain comment placed inside the class body, not a docstring attached to any attribute or method. It adds noise without providing documentation that tools can surface.\",\n      \"refactoring_suggestion\": \"Convert the comment into a proper attribute docstring or move it to the field's comment using a type‑annotated comment, or incorporate the information into the class docstring.\",\n      \"refactored_example\": \"class BaseEvalSpec:\\n    \\\"\\\"\\\"Specification for a base eval.\\n\\n    Attributes:\\n        higher_is_better (bool): True if higher values are better, False otherwise.\\n        ...\\n    \\\"\\\"\\\"\\n    higher_is_better: bool = True  # True if higher values are better; otherwise lower is better.\"\n    }\n  ]\n}"
+  },
+  {
+    "success": true,
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "file": "3.0.0\\evals\\api.py",
+    "analysis": {
+      "file_analyzed": "3.0.0\\evals\\api.py",
+      "total_smells_found": 3,
+      "smells": [
+        {
+          "smell_type": "Long Method",
+          "category": "Bloaters",
+          "location": {
+            "file": "3.0.0\\evals\\api.py",
+            "line_start": 68,
+            "line_end": 98,
+            "function": "record_and_check_match",
+            "class": "None"
+          },
+          "evidence": "def record_and_check_match(\n    prompt: Any,\n    sampled: str,\n    expected: Union[str, list[str], tuple[str]],\n    separator: Callable[[str], bool] = None,\n    options: Optional[list[str]] = None\n):",
+          "severity": "High",
+          "justification": "The `record_and_check_match` function has 31 lines of code, which is significantly more than the recommended 20-30 lines, making it difficult to understand and maintain.",
+          "refactoring_suggestion": "Extract smaller methods: validate_input(), check_match(), record_result()",
+          "refactored_example": "def record_and_check_match(prompt: Any, sampled: str, expected: Union[str, list[str], tuple[str]], separator: Callable[[str], bool] = None, options: Optional[list[str]] = None):\n    validated_prompt = validate_input(prompt)\n    matched_option = check_match(sampled, expected, separator, options)\n    record_result(matched_option, expected, sampled, options)\n\ndef validate_input(prompt: Any) -> str:\n    # Validation logic\n\ndef check_match(sampled: str, expected: Union[str, list[str], tuple[str]], separator: Callable[[str], bool] = None, options: Optional[list[str]] = None) -> str:\n    # Matching logic\n\ndef record_result(matched_option: str, expected: Union[str, list[str], tuple[str]], sampled: str, options: Optional[list[str]] = None):\n    # Recording logic"
+        },
+        {
+          "smell_type": "Primitive Obsession",
+          "category": "Bloaters",
+          "location": {
+            "file": "3.0.0\\evals\\api.py",
+            "line_start": 71,
+            "line_end": 71,
+            "function": "record_and_check_match",
+            "class": "None"
+          },
+          "evidence": "    if isinstance(expected, tuple):\n        expected = list(expected)",
+          "severity": "Medium",
+          "justification": "The function uses `isinstance(expected, tuple)` to convert a tuple to a list, which is a form of primitive obsession. This can be simplified using a more direct approach.",
+          "refactoring_suggestion": "Use a more direct approach to handle the expected type: `expected = list(expected) if isinstance(expected, tuple) else expected`",
+          "refactored_example": "def record_and_check_match(prompt: Any, sampled: str, expected: Union[str, list[str], tuple[str]], separator: Callable[[str], bool] = None, options: Optional[list[str]] = None):\n    expected = list(expected) if isinstance(expected, tuple) else expected\n    # Rest of the function"
+        },
+        {
+          "smell_type": "Lazy Class",
+          "category": "Dispensables",
+          "location": {
+            "file": "3.0.0\\evals\\api.py",
+            "line_start": 32,
+            "line_end": 32,
+            "function": "None",
+            "class": "DummyCompletionResult"
+          },
+          "evidence": "class DummyCompletionResult(CompletionResult):\n    def get_completions(self) -> list[str]:\n        return ['This is a dummy response.']",
+          "severity": "Low",
+          "justification": "The `DummyCompletionResult` class is a simple class with a single method that returns a hardcoded list. This class does not add any value and can be replaced with a simple function or a constant.",
+          "refactoring_suggestion": "Replace `DummyCompletionResult` with a simple function or constant: `def get_dummy_completion() -> list[str]: return ['This is a dummy response.']`",
+          "refactored_example": "def get_dummy_completion() -> list[str]:\n    return ['This is a dummy response.']"
+        }
+      ]
+    },
+    "raw_response": "{\n  \"file_analyzed\": \"3.0.0\\\\evals\\\\api.py\",\n  \"total_smells_found\": 3,\n  \"smells\": [\n    {\n      \"smell_type\": \"Long Method\",\n      \"category\": \"Bloaters\",\n      \"location\": {\n        \"file\": \"3.0.0\\\\evals\\\\api.py\",\n        \"line_start\": 68,\n        \"line_end\": 98,\n        \"function\": \"record_and_check_match\",\n        \"class\": \"None\"\n      },\n      \"evidence\": \"def record_and_check_match(\\n    prompt: Any,\\n    sampled: str,\\n    expected: Union[str, list[str], tuple[str]],\\n    separator: Callable[[str], bool] = None,\\n    options: Optional[list[str]] = None\\n):\",\n      \"severity\": \"High\",\n      \"justification\": \"The `record_and_check_match` function has 31 lines of code, which is significantly more than the recommended 20-30 lines, making it difficult to understand and maintain.\",\n      \"refactoring_suggestion\": \"Extract smaller methods: validate_input(), check_match(), record_result()\",\n      \"refactored_example\": \"def record_and_check_match(prompt: Any, sampled: str, expected: Union[str, list[str], tuple[str]], separator: Callable[[str], bool] = None, options: Optional[list[str]] = None):\\n    validated_prompt = validate_input(prompt)\\n    matched_option = check_match(sampled, expected, separator, options)\\n    record_result(matched_option, expected, sampled, options)\\n\\ndef validate_input(prompt: Any) -> str:\\n    # Validation logic\\n\\ndef check_match(sampled: str, expected: Union[str, list[str], tuple[str]], separator: Callable[[str], bool] = None, options: Optional[list[str]] = None) -> str:\\n    # Matching logic\\n\\ndef record_result(matched_option: str, expected: Union[str, list[str], tuple[str]], sampled: str, options: Optional[list[str]] = None):\\n    # Recording logic\"\n    },\n    {\n      \"smell_type\": \"Primitive Obsession\",\n      \"category\": \"Bloaters\",\n      \"location\": {\n        \"file\": \"3.0.0\\\\evals\\\\api.py\",\n        \"line_start\": 71,\n        \"line_end\": 71,\n        \"function\": \"record_and_check_match\",\n        \"class\": \"None\"\n      },\n      \"evidence\": \"    if isinstance(expected, tuple):\\n        expected = list(expected)\",\n      \"severity\": \"Medium\",\n      \"justification\": \"The function uses `isinstance(expected, tuple)` to convert a tuple to a list, which is a form of primitive obsession. This can be simplified using a more direct approach.\",\n      \"refactoring_suggestion\": \"Use a more direct approach to handle the expected type: `expected = list(expected) if isinstance(expected, tuple) else expected`\",\n      \"refactored_example\": \"def record_and_check_match(prompt: Any, sampled: str, expected: Union[str, list[str], tuple[str]], separator: Callable[[str], bool] = None, options: Optional[list[str]] = None):\\n    expected = list(expected) if isinstance(expected, tuple) else expected\\n    # Rest of the function\"\n    },\n    {\n      \"smell_type\": \"Lazy Class\",\n      \"category\": \"Dispensables\",\n      \"location\": {\n        \"file\": \"3.0.0\\\\evals\\\\api.py\",\n        \"line_start\": 32,\n        \"line_end\": 32,\n        \"function\": \"None\",\n        \"class\": \"DummyCompletionResult\"\n      },\n      \"evidence\": \"class DummyCompletionResult(CompletionResult):\\n    def get_completions(self) -> list[str]:\\n        return ['This is a dummy response.']\",\n      \"severity\": \"Low\",\n      \"justification\": \"The `DummyCompletionResult` class is a simple class with a single method that returns a hardcoded list. This class does not add any value and can be replaced with a simple function or a constant.\",\n      \"refactoring_suggestion\": \"Replace `DummyCompletionResult` with a simple function or constant: `def get_dummy_completion() -> list[str]: return ['This is a dummy response.']`\",\n      \"refactored_example\": \"def get_dummy_completion() -> list[str]:\\n    return ['This is a dummy response.']\"\n    }\n  ]\n}"
+  },
+  {
+    "success": true,
+    "model": "google/gemma-2-2b-it:nebius",
+    "file": "3.0.0\\evals\\api.py",
+    "analysis": {
+      "file_analyzed": "3.0.0/evals/api.py",
+      "total_smells_found": 4,
+      "smells": [
+        {
+          "smell_type": "Long Method",
+          "category": "Bloaters",
+          "location": {
+            "file": "3.0.0/evals/api.py",
+            "line_start": 10,
+            "line_end": 150,
+            "function": "record_and_check_match",
+            "class": "None"
+          },
+          "evidence": "def record_and_check_match(prompt: Any, sampled: str, expected: Union[str, list[str], tuple[str]], separator: Callable[[str], bool] = None, options: Optional[list[str]] = None):",
+          "severity": "Medium",
+          "justification": "The method is quite long, exceeding 150 lines. This can make it harder to understand and maintain.",
+          "refactoring_suggestion": "Break the method into smaller, more focused functions.",
+          "refactored_example": "def check_match(prompt: Any, sampled: str, expected: Union[str, list[str], tuple[str]], separator: Callable[[str], bool] = None, options: Optional[list[str]] = None):\n    # ... (code for checking match)\n"
+        },
+        {
+          "smell_type": "Inappropriate Intimacy",
+          "category": "Couplers",
+          "location": {
+            "file": "3.0.0/evals/api.py",
+            "line_start": 10,
+            "line_end": 150,
+            "function": "record_and_check_match",
+            "class": "None"
+          },
+          "evidence": "def record_and_check_match(prompt: Any, sampled: str, expected: Union[str, list[str], tuple[str]], separator: Callable[[str], bool] = None, options: Optional[list[str]] = None):",
+          "severity": "Medium",
+          "justification": "The method is coupling the `record_match` function with the `record_and_check_match` function. This can lead to tight coupling and make it harder to change the behavior of either function.",
+          "refactoring_suggestion": "Refactor the `record_and_check_match` function to be more independent.",
+          "refactored_example": "def record_and_check_match(prompt: Any, sampled: str, expected: Union[str, list[str], tuple[str]], separator: Callable[[str], bool] = None, options: Optional[list[str]] = None):\n    # ... (code for checking match)\n"
+        },
+        {
+          "smell_type": "Long Method",
+          "category": "Bloaters",
+          "location": {
+            "file": "3.0.0/evals/api.py",
+            "line_start": 10,
+            "line_end": 150,
+            "function": "record_and_check_match",
+            "class": "None"
+          },
+          "evidence": "def record_and_check_match(prompt: Any, sampled: str, expected: Union[str, list[str], tuple[str]], separator: Callable[[str], bool] = None, options: Optional[list[str]] = None):",
+          "severity": "Medium",
+          "justification": "The method is quite long, exceeding 150 lines. This can make it harder to understand and maintain.",
+          "refactoring_suggestion": "Break the method into smaller, more focused functions.",
+          "refactored_example": "def check_match(prompt: Any, sampled: str, expected: Union[str, list[str], tuple[str]], separator: Callable[[str], bool] = None, options: Optional[list[str]] = None):\n    # ... (code for checking match)\n"
+        }
+      ]
+    },
+    "raw_response": "{\n  \"file_analyzed\": \"3.0.0/evals/api.py\",\n  \"total_smells_found\": 4,\n  \"smells\": [\n    {\n      \"smell_type\": \"Long Method\",\n      \"category\": \"Bloaters\",\n      \"location\": {\n        \"file\": \"3.0.0/evals/api.py\",\n        \"line_start\": 10,\n        \"line_end\": 150,\n        \"function\": \"record_and_check_match\",\n        \"class\": \"None\"\n      },\n      \"evidence\": \"def record_and_check_match(prompt: Any, sampled: str, expected: Union[str, list[str], tuple[str]], separator: Callable[[str], bool] = None, options: Optional[list[str]] = None):\",\n      \"severity\": \"Medium\",\n      \"justification\": \"The method is quite long, exceeding 150 lines. This can make it harder to understand and maintain.\",\n      \"refactoring_suggestion\": \"Break the method into smaller, more focused functions.\",\n      \"refactored_example\": \"def check_match(prompt: Any, sampled: str, expected: Union[str, list[str], tuple[str]], separator: Callable[[str], bool] = None, options: Optional[list[str]] = None):\\n    # ... (code for checking match)\\n\"\n    },\n    {\n      \"smell_type\": \"Inappropriate Intimacy\",\n      \"category\": \"Couplers\",\n      \"location\": {\n        \"file\": \"3.0.0/evals/api.py\",\n        \"line_start\": 10,\n        \"line_end\": 150,\n        \"function\": \"record_and_check_match\",\n        \"class\": \"None\"\n      },\n      \"evidence\": \"def record_and_check_match(prompt: Any, sampled: str, expected: Union[str, list[str], tuple[str]], separator: Callable[[str], bool] = None, options: Optional[list[str]] = None):\",\n      \"severity\": \"Medium\",\n      \"justification\": \"The method is coupling the `record_match` function with the `record_and_check_match` function. This can lead to tight coupling and make it harder to change the behavior of either function.\",\n      \"refactoring_suggestion\": \"Refactor the `record_and_check_match` function to be more independent.\",\n      \"refactored_example\": \"def record_and_check_match(prompt: Any, sampled: str, expected: Union[str, list[str], tuple[str]], separator: Callable[[str], bool] = None, options: Optional[list[str]] = None):\\n    # ... (code for checking match)\\n\"\n    },\n    {\n      \"smell_type\": \"Long Method\",\n      \"category\": \"Bloaters\",\n      \"location\": {\n        \"file\": \"3.0.0/evals/api.py\",\n        \"line_start\": 10,\n        \"line_end\": 150,\n        \"function\": \"record_and_check_match\",\n        \"class\": \"None\"\n      },\n      \"evidence\": \"def record_and_check_match(prompt: Any, sampled: str, expected: Union[str, list[str], tuple[str]], separator: Callable[[str], bool] = None, options: Optional[list[str]] = None):\",\n      \"severity\": \"Medium\",\n      \"justification\": \"The method is quite long, exceeding 150 lines. This can make it harder to understand and maintain.\",\n      \"refactoring_suggestion\": \"Break the method into smaller, more focused functions.\",\n      \"refactored_example\": \"def check_match(prompt: Any, sampled: str, expected: Union[str, list[str], tuple[str]], separator: Callable[[str], bool] = None, options: Optional[list[str]] = None):\\n    # ... (code for checking match)\\n\"\n    }\n  ]\n}"
+  },
+  {
+    "success": true,
+    "model": "openai/gpt-oss-120b:groq",
+    "file": "3.0.0\\evals\\api.py",
+    "analysis": {
+      "file_analyzed": "3.0.0/evals/api.py",
+      "total_smells_found": 3,
+      "smells": [
+        {
+          "smell_type": "Long Parameter List",
+          "category": "Bloaters",
+          "location": {
+            "file": "3.0.0/evals/api.py",
+            "line_start": 38,
+            "line_end": 71,
+            "function": "record_and_check_match",
+            "class": null
+          },
+          "evidence": "def record_and_check_match(\n    prompt: Any,\n    sampled: str,\n    expected: Union[str, list[str], tuple[str]],\n    separator: Callable[[str], bool] = None,\n    options: Optional[list[str]] = None,\n):",
+          "severity": "Medium",
+          "justification": "The function takes five parameters, mixing raw data (prompt, sampled) with configuration (separator, options). Adding or changing a parameter forces callers to be updated, increasing the risk of bugs and reducing readability.",
+          "refactoring_suggestion": "Introduce a parameter object (e.g., RecordMatchConfig) that groups related arguments. Use default values inside the object and pass a single instance to the function. This also makes the call sites clearer.",
+          "refactored_example": "class RecordMatchConfig:\n    def __init__(self, prompt: Any, sampled: str, expected: Union[str, list[str], tuple[str]],\n                 separator: Callable[[str], bool] = None, options: Optional[list[str]] = None):\n        self.prompt = prompt\n        self.sampled = sampled\n        self.expected = expected\n        self.separator = separator\n        self.options = options\n\ndef record_and_check_match(cfg: RecordMatchConfig) -> Optional[str]:\n    expected = list(cfg.expected) if isinstance(cfg.expected, (list, tuple)) else [cfg.expected]\n    options = cfg.options or expected\n    # ... rest of logic unchanged ..."
+        },
+        {
+          "smell_type": "Data Clumps",
+          "category": "Bloaters",
+          "location": {
+            "file": "3.0.0/evals/api.py",
+            "line_start": 38,
+            "line_end": 71,
+            "function": "record_and_check_match",
+            "class": null
+          },
+          "evidence": "expected = list(expected) ...\nif options is None:\n    options = expected",
+          "severity": "Low",
+          "justification": "The two parameters `expected` and `options` are always used together and undergo the same transformations. Their repeated handling indicates they belong to a single cohesive concept, and passing them separately creates duplicated logic across call sites.",
+          "refactoring_suggestion": "Combine them into a small value object (e.g., MatchChoices) that stores the canonical list of expected values and the list of options to test against. The function then works with that object, eliminating duplicated conversion code.",
+          "refactored_example": "class MatchChoices:\n    def __init__(self, expected: Union[str, list[str], tuple[str]], options: Optional[list[str]] = None):\n        self.expected = list(expected) if not isinstance(expected, list) else expected\n        self.options = options or self.expected\n\ndef record_and_check_match(prompt: Any, sampled: str, choices: MatchChoices, separator: Callable[[str], bool] = None) -> Optional[str]:\n    for option in choices.options:\n        # matching logic unchanged"
+        },
+        {
+          "smell_type": "Primitive Obsession",
+          "category": "Bloaters",
+          "location": {
+            "file": "3.0.0/evals/api.py",
+            "line_start": 38,
+            "line_end": 71,
+            "function": "record_and_check_match",
+            "class": null
+          },
+          "evidence": "def record_and_check_match(..., expected: Union[str, list[str], tuple[str]], options: Optional[list[str]] = None, ...)",
+          "severity": "Low",
+          "justification": "The function relies on raw built‑in types (str, list, tuple) to represent domain concepts such as \"expected answer\" and \"available options\". This makes validation, extension, and readability harder because the intent is not explicit.",
+          "refactoring_suggestion": "Create small domain classes (e.g., ExpectedAnswer, OptionSet) that encapsulate validation and conversion logic. Pass instances of those classes instead of raw primitives.",
+          "refactored_example": "class ExpectedAnswer:\n    def __init__(self, value: Union[str, list[str], tuple[str]]):\n        self.values = list(value) if not isinstance(value, list) else value\n\nclass OptionSet:\n    def __init__(self, options: Optional[list[str]], fallback: ExpectedAnswer):\n        self.options = options if options is not None else fallback.values\n\ndef record_and_check_match(prompt: Any, sampled: str, expected: ExpectedAnswer, option_set: OptionSet, separator: Callable[[str], bool] = None) -> Optional[str]:\n    for option in option_set.options:\n        # matching logic unchanged"
+        }
+      ]
+    },
+    "raw_response": "{\n  \"file_analyzed\": \"3.0.0/evals/api.py\",\n  \"total_smells_found\": 3,\n  \"smells\": [\n    {\n      \"smell_type\": \"Long Parameter List\",\n      \"category\": \"Bloaters\",\n      \"location\": {\n        \"file\": \"3.0.0/evals/api.py\",\n        \"line_start\": 38,\n        \"line_end\": 71,\n        \"function\": \"record_and_check_match\",\n        \"class\": null\n      },\n      \"evidence\": \"def record_and_check_match(\\n    prompt: Any,\\n    sampled: str,\\n    expected: Union[str, list[str], tuple[str]],\\n    separator: Callable[[str], bool] = None,\\n    options: Optional[list[str]] = None,\\n):\",\n      \"severity\": \"Medium\",\n      \"justification\": \"The function takes five parameters, mixing raw data (prompt, sampled) with configuration (separator, options). Adding or changing a parameter forces callers to be updated, increasing the risk of bugs and reducing readability.\",\n      \"refactoring_suggestion\": \"Introduce a parameter object (e.g., RecordMatchConfig) that groups related arguments. Use default values inside the object and pass a single instance to the function. This also makes the call sites clearer.\",\n      \"refactored_example\": \"class RecordMatchConfig:\\n    def __init__(self, prompt: Any, sampled: str, expected: Union[str, list[str], tuple[str]],\\n                 separator: Callable[[str], bool] = None, options: Optional[list[str]] = None):\\n        self.prompt = prompt\\n        self.sampled = sampled\\n        self.expected = expected\\n        self.separator = separator\\n        self.options = options\\n\\ndef record_and_check_match(cfg: RecordMatchConfig) -> Optional[str]:\\n    expected = list(cfg.expected) if isinstance(cfg.expected, (list, tuple)) else [cfg.expected]\\n    options = cfg.options or expected\\n    # ... rest of logic unchanged ...\"\n    },\n    {\n      \"smell_type\": \"Data Clumps\",\n      \"category\": \"Bloaters\",\n      \"location\": {\n        \"file\": \"3.0.0/evals/api.py\",\n        \"line_start\": 38,\n        \"line_end\": 71,\n        \"function\": \"record_and_check_match\",\n        \"class\": null\n      },\n      \"evidence\": \"expected = list(expected) ...\\nif options is None:\\n    options = expected\",\n      \"severity\": \"Low\",\n      \"justification\": \"The two parameters `expected` and `options` are always used together and undergo the same transformations. Their repeated handling indicates they belong to a single cohesive concept, and passing them separately creates duplicated logic across call sites.\",\n      \"refactoring_suggestion\": \"Combine them into a small value object (e.g., MatchChoices) that stores the canonical list of expected values and the list of options to test against. The function then works with that object, eliminating duplicated conversion code.\",\n      \"refactored_example\": \"class MatchChoices:\\n    def __init__(self, expected: Union[str, list[str], tuple[str]], options: Optional[list[str]] = None):\\n        self.expected = list(expected) if not isinstance(expected, list) else expected\\n        self.options = options or self.expected\\n\\ndef record_and_check_match(prompt: Any, sampled: str, choices: MatchChoices, separator: Callable[[str], bool] = None) -> Optional[str]:\\n    for option in choices.options:\\n        # matching logic unchanged\"\n    },\n    {\n      \"smell_type\": \"Primitive Obsession\",\n      \"category\": \"Bloaters\",\n      \"location\": {\n        \"file\": \"3.0.0/evals/api.py\",\n        \"line_start\": 38,\n        \"line_end\": 71,\n        \"function\": \"record_and_check_match\",\n        \"class\": null\n      },\n      \"evidence\": \"def record_and_check_match(..., expected: Union[str, list[str], tuple[str]], options: Optional[list[str]] = None, ...)\",\n      \"severity\": \"Low\",\n      \"justification\": \"The function relies on raw built‑in types (str, list, tuple) to represent domain concepts such as \\\"expected answer\\\" and \\\"available options\\\". This makes validation, extension, and readability harder because the intent is not explicit.\",\n      \"refactoring_suggestion\": \"Create small domain classes (e.g., ExpectedAnswer, OptionSet) that encapsulate validation and conversion logic. Pass instances of those classes instead of raw primitives.\",\n      \"refactored_example\": \"class ExpectedAnswer:\\n    def __init__(self, value: Union[str, list[str], tuple[str]]):\\n        self.values = list(value) if not isinstance(value, list) else value\\n\\nclass OptionSet:\\n    def __init__(self, options: Optional[list[str]], fallback: ExpectedAnswer):\\n        self.options = options if options is not None else fallback.values\\n\\ndef record_and_check_match(prompt: Any, sampled: str, expected: ExpectedAnswer, option_set: OptionSet, separator: Callable[[str], bool] = None) -> Optional[str]:\\n    for option in option_set.options:\\n        # matching logic unchanged\"\n    }\n  ]\n}"
+  }
+]
