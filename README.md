@@ -1,4 +1,5 @@
-# Code Smells Analysis - Evolução de Software 2025.2
+# Atividade 2 da disciplina de Evolução de Software 2025/2
+
 
 Análise automatizada de code smells em 3 releases do projeto usando múltiplos modelos LLM.
 
